@@ -12,20 +12,13 @@ import yaml
 import stressberry
 
 
-def test():
-    print('Cooldown...')
-    stressberry.cooldown()
-
-    stressberry.stress_cpu(num_cpus=1, time=10)
-
-    print('Cooldown...')
-    stressberry.cooldown()
-    return
-
-
 def _main(args):
 
-    t = threading.Thread(target=test, args=())
+    # Cool down first
+    print('Cooldown...')
+    stressberry.cooldown()
+
+    t = threading.Thread(target=stressberry.test01, args=())
     t.start()
 
     interval = 1.0

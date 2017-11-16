@@ -46,3 +46,14 @@ def measure_core_frequency():
     # frequency(45)=102321321
     m = re.match('frequency\([0-9]+\)=([0-9]+)', output)
     return int(m.group(1))
+
+
+def test01():
+    print('Cooldown...')
+    cooldown()
+
+    for num_cpus in range(1, 5):
+        stress_cpu(num_cpus, time=120)
+        print('Cooldown...')
+        cooldown()
+    return
