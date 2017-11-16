@@ -4,22 +4,44 @@
 import argparse
 import time
 import sys
+import threading
 
 import stressberry
+
+
+def test():
+    print('Cooldown...')
+    base_temp = stressberry.cooldown()
+    print('Base temperature {}°C.'.format(base_temp))
+    stressberry.stress_cpu(
+            num_cpus=4,
+            time=30,
+            measurement_interval=1,
+            )
+    print('Cooldown...')
+    base_temp = stressberry.cooldown()
+    print('Base temperature {}°C.'.format(base_temp))
+    return
 
 
 def _main():
     # args = _parse_cmd_arguments()
 
-    print('Cooldown...')
-    base_temp = stressberry.cooldown()
-    print('Base temperature {}°C.'.format(base_temp))
+    t = threading.Thread(target=test, args=())
+    t.start()
 
-    times, temps, freq = stressberry.stress_cpu(
-            num_cpus=4,
-            time=30,
-            measurement_interval=1,
-            )
+    times = []
+    temps = []
+    freq = []
+    while t.is_alive():
+        times.append(time.time())
+        temps.append(stressberry.measure_temp())
+        freq.append(stressberry.measure_core_frequency())
+        t.join(1.0)
+
+    # normalize times
+    time0 = times[0]
+    times = [tm - time0 for tm in times]
 
     print(len(times))
     print(times)
@@ -28,9 +50,6 @@ def _main():
     print(len(freq))
     print(freq)
 
-    print('Cooldown...')
-    base_temp = stressberry.cooldown()
-    print('Base temperature {}°C.'.format(base_temp))
     return
 
 

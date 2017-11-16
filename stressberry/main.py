@@ -6,29 +6,12 @@ import time as tme
 
 
 def stress_cpu(num_cpus, time, measurement_interval):
-    p = subprocess.Popen([
+    subprocess.check_call([
         'stress',
         '--cpu', str(num_cpus),
         '--timeout', '{}s'.format(time)
         ])
-
-    times = []
-    temps = []
-    freq = []
-    while p.poll() is None:
-        times.append(tme.time())
-        temps.append(measure_temp())
-        freq.append(measure_core_frequency())
-        tme.sleep(measurement_interval)
-
-    # normalize times
-    time0 = times[0]
-    times = [t - time0 for t in times]
-
-    assert p.returncode == 0, \
-        'stress exited with error (return code {})'.format(p.returncode)
-
-    return times, temps, freq
+    return
 
 
 def cooldown(interval=10):
