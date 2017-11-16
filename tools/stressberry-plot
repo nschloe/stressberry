@@ -2,8 +2,9 @@
 # -*- coding: utf-8 -*-
 #
 import argparse
-import matplotlib.pyplot as plt
 import sys
+
+import matplotlib.pyplot as plt
 import yaml
 
 import stressberry
@@ -12,7 +13,7 @@ import stressberry
 def _main(args):
     data = yaml.load(args.infile)
 
-    fig, ax1 = plt.subplots()
+    _, ax1 = plt.subplots()
 
     red = '#d62728'
     blue = '#1f77b4'

@@ -31,8 +31,8 @@ def measure_temp():
     '''Returns the core temperature in Celsius.
     '''
     output = subprocess.check_output(
-            ['vcgencmd', 'measure_temp']
-            ).decode('utf-8')
+        ['vcgencmd', 'measure_temp']
+        ).decode('utf-8')
     return float(output.replace('temp=', '').replace('\'C', ''))
 
 
@@ -40,11 +40,11 @@ def measure_core_frequency():
     '''Returns the processor frequency in Hz.
     '''
     output = subprocess.check_output(
-            ['vcgencmd', 'measure_clock', 'arm']
-            ).decode('utf-8')
+        ['vcgencmd', 'measure_clock', 'arm']
+        ).decode('utf-8')
 
     # frequency(45)=102321321
-    m = re.match('frequency\([0-9]+\)=([0-9]+)', output)
+    m = re.match('frequency\\([0-9]+\\)=([0-9]+)', output)
     return int(m.group(1))
 
 
