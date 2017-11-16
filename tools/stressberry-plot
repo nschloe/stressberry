@@ -19,6 +19,7 @@ def _main(args):
     blue = '#1f77b4'
 
     ax1.plot(data['time'], data['temperature'], red)
+    ax1.grid()
     ax1.set_xlabel('time (s)')
     ax1.set_ylabel('temperature (°C)', color=red)
     ax1.set_xlim([data['time'][0], data['time'][-1]])
