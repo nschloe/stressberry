@@ -45,6 +45,7 @@ setup(
         'Topic :: Scientific/Engineering :: Mathematics'
         ]
     scripts=[
+        'tools/stressberry-plot',
         'tools/stressberry-run',
         ]
     )
