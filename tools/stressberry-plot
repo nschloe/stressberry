@@ -16,7 +16,6 @@ def _main(args):
     _, ax1 = plt.subplots()
 
     red = '#d62728'
-    blue = '#1f77b4'
 
     ax1.plot(data['time'], data['temperature'], red)
     ax1.grid()
@@ -27,13 +26,15 @@ def _main(args):
     # Set the temperature limits fixed so one can compare different solutions.
     ax1.set_ylim([30.0, 85.0])
 
-    ax2 = ax1.twinx()
-    ax2.plot(data['time'], data['cpu load'], blue)
-    ax2.set_ylabel('CPU load', color=blue)
-    ax2.tick_params('y', colors=blue)
-    ax2.set_ylim([0.0, 1.1])
+    # Show the CPU load:
+    # blue = '#1f77b4'
+    # ax2 = ax1.twinx()
+    # ax2.plot(data['time'], data['cpu load'], blue)
+    # ax2.set_ylabel('CPU load', color=blue)
+    # ax2.tick_params('y', colors=blue)
+    # ax2.set_ylim([0.0, 1.1])
 
-    ax1.set_zorder(ax2.get_zorder() + 1)
+    # ax1.set_zorder(ax2.get_zorder() + 1)
 
     if args.outfile is not None:
         plt.savefig(args.outfile, transparent=True)

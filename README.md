@@ -20,9 +20,8 @@ and run it with
 ```
 stressberry-run out.dat
 ```
-The run stresses the CPU for five minutes, lets it cool down, and stresses
-again with a higher load, and so forth. The entire process takes about half an
-hour.
+The run lets the CPU idle for a bit, then stresses it with maximum load for 5
+minutes, and lets it cool down afterwards. The entire process takes 10 minutes.
 The resulting data file can be displayed with
 ```
 stressberry-plot out.dat [out.png]
