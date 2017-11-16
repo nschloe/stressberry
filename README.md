@@ -9,7 +9,7 @@ Stress tests for the Raspberry Pi.
 
 <img src="https://nschloe.github.io/stressberry/all.png" width="70%">
 
-There are a million of ways to cool down your Raspberry Pi: Small heat sinks,
+There are a million ways to cool down your Raspberry Pi: Small heat sinks,
 specific cases, and some [extreme DIY solutions](https://youtu.be/WfQMLInuwws).
 stressberry is a package for testing the core temperature under different
 loads, and it produces nice plots which can easily be compared.
@@ -21,22 +21,20 @@ To run stressberry on your computer, simply install it with
 and run it with
 ```
 stressberry-run out.dat
+stressberry-plot out.dat [-o out.png]
 ```
 The run lets the CPU idle for a bit, then stresses it with maximum load for 5
 minutes, and lets it cool down afterwards. The entire process takes 10 minutes.
-The resulting data file can be displayed with
-```
-stressberry-plot out.dat [-o out.png]
-```
-If you specify a PNG file, the image gets written to that.
+The resulting data is displayed to a screen or, if specified, written to a PNG
+file.
 
 If you'd like to submit your own data for display here, feel free to
 [open an issue](https://github.com/nschloe/stressberry/issues) and include the
 data file, a photograph of your setup, and perhaps some further information.
 
-### "Case" studies
+### The setups
 
-#### The naked Raspberry Pi 3
+#### A naked Raspberry Pi 3
 
 <img src="https://nschloe.github.io/stressberry/naked-photo.jpg" width="30%">
 
@@ -48,7 +46,7 @@ CPU frequency is throttled).
 
 To run the tests, just check out this repository and type
 ```
-MPLBACKEND=Agg pytest
+pytest
 ```
 
 ### Distribution
