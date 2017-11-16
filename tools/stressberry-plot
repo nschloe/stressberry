@@ -22,7 +22,8 @@ def _main(args):
     ax1.set_ylabel('temperature (°C)', color=red)
     ax1.set_xlim([data['time'][0], data['time'][-1]])
     ax1.tick_params('y', colors=red)
-    # ax1.set_ylim([0.0, max(data['temperature']) * 1.1])
+    # Set the temperature limits fixed so one can compare different solutions.
+    ax1.set_ylim([30.0, 85.0])
 
     ax2 = ax1.twinx()
     ax2.plot(data['time'], data['cpu load'], blue)
