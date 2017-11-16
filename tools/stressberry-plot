@@ -1,0 +1,59 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+#
+import argparse
+import matplotlib.pyplot as plt
+import sys
+import yaml
+
+import stressberry
+
+
+def _main(args):
+    data = yaml.load(args.infile)
+
+    plt.plot(data['time'], data['temperature'], label='temp (°C)')
+    plt.xlabel('time (s)')
+
+    plt.xlim([data['time'][0], data['time'][-1]])
+    plt.ylim([0.0, max(data['temperature']) * 1.1])
+
+    if args.outfile is not None:
+        plt.savefig(args.outfile, transparent=True)
+    else:
+        plt.show()
+    return
+
+
+def _parse_cmd_arguments():
+    parser = argparse.ArgumentParser(
+        description='Plot stress test data.'
+        )
+    parser.add_argument(
+        '-v', '--version',
+        help='display version information',
+        action='version',
+        version='stressberry {}, Python {}'.format(
+            stressberry.__version__, sys.version
+            )
+        )
+    parser.add_argument(
+        'infile',
+        nargs='?',
+        type=argparse.FileType('r'),
+        default=sys.stdin,
+        help='input YAML file (default: stdin)'
+        )
+    parser.add_argument(
+        'outfile',
+        nargs='?',
+        help=(
+            'if specified, the plot is written to this file '
+            '(default: show on screen)'
+            )
+        )
+    return parser.parse_args()
+
+
+if __name__ == '__main__':
+    _main(_parse_cmd_arguments())
