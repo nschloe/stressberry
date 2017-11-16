@@ -47,6 +47,7 @@ def _main(args):
         )
     yaml.dump(
         {
+            'name': args.name,
             'time': times,
             'temperature': temps,
             'cpu frequency': freq,
@@ -68,6 +69,12 @@ def _parse_cmd_arguments():
         version='stressberry {}, Python {}'.format(
             stressberry.__version__, sys.version
             )
+        )
+    parser.add_argument(
+        '-n', '--name',
+        type=str,
+        default='stressberry data',
+        help='name the data set (default: \'stressberry data\')',
         )
     parser.add_argument(
         'outfile',
