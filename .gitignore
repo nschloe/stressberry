@@ -8,3 +8,5 @@ build/
 .coverage
 .cache/
 *.egg-info/
+*.dat
+*.png
