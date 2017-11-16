@@ -8,7 +8,9 @@ import stressberry
 
 
 def _main():
-    args = _parse_cmd_arguments()
+    # args = _parse_cmd_arguments()
+
+    stressberry.start_stressing(1, 10)
     return
 
 
