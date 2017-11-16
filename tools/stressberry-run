@@ -7,7 +7,6 @@ import time
 
 import argparse
 import datetime
-import psutil
 import yaml
 
 import stressberry
@@ -25,13 +24,9 @@ def _main(args):
 
     times = []
     temps = []
-    freq = []
-    load = []
     while t.is_alive():
         times.append(time.time())
         temps.append(stressberry.measure_temp())
-        freq.append(stressberry.measure_core_frequency())
-        load.append(psutil.cpu_percent() / 100.0)
         # Choose the sample interval such that we have a respectable number of
         # data points
         t.join(2.0)
@@ -50,8 +45,6 @@ def _main(args):
             'name': args.name,
             'time': times,
             'temperature': temps,
-            'cpu frequency': freq,
-            'cpu load': load,
         },
         args.outfile
         )
