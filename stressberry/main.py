@@ -15,13 +15,13 @@ def stress_cpu(num_cpus, time):
 
 
 def cooldown(interval=60):
-    '''Lets the cpu cool down until the temperature does not drop anymore.
+    '''Lets the CPU cool down until the temperature does not change anymore.
     '''
     prev_tmp = measure_temp()
     while True:
         tme.sleep(interval)
         tmp = measure_temp()
-        if tmp >= prev_tmp:
+        if abs(tmp - prev_tmp) < 0.2:
             break
         prev_tmp = tmp
     return tmp
@@ -50,6 +50,7 @@ def measure_core_frequency():
 
 def test01():
     # First, a test with no cpu load
+    print('Idling...')
     tme.sleep(600)
     for num_cpus in range(1, 5):
         stress_cpu(num_cpus, time=600)

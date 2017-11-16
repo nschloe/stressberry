@@ -19,26 +19,21 @@ def _main(args):
     print('Cooldown...')
     stressberry.cooldown()
 
+    # Start the stress test in another thread
     t = threading.Thread(target=stressberry.test01, args=())
     t.start()
-
-    interval = 1.0
 
     times = []
     temps = []
     freq = []
     load = []
-    k = 0
     while t.is_alive():
         times.append(time.time())
         temps.append(stressberry.measure_temp())
         freq.append(stressberry.measure_core_frequency())
         load.append(psutil.cpu_percent() / 100.0)
-        t.join(interval)
-        # print the current temperature once in a while
-        if k % 10 == 0:
-            print('Current temperature: {}°C'.format(temps[-1]))
-        k += 1
+        t.join(5.0)
+        print('Current temperature: {}°C'.format(temps[-1]))
 
     # normalize times
     time0 = times[0]
