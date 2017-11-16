@@ -35,6 +35,7 @@ setup(
     author_email=about['__email__'],
     install_requires=[
         'matplotlib',
+        'psutil',
         'pyyaml',
         ],
     description='stress tests for the Raspberry Pi',
