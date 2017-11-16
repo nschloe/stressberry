@@ -33,7 +33,10 @@ setup(
     download_url='https://pypi.python.org/pypi/stressberry',
     author=about['__author__'],
     author_email=about['__email__'],
-    install_requires=[],
+    install_requires=[
+        'matplotlib',
+        'pyyaml',
+        ],
     description='stress tests for the Raspberry Pi',
     long_description=read('README.rst'),
     license=about['__license__'],
