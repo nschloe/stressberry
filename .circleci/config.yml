@@ -9,7 +9,7 @@ jobs:
       - image: ubuntu:17.10
     steps:
       - run: apt-get update
-      - run: apt-get install -y python3 stress
+      - run: apt-get install -y python3-pip stress
       - run: pip3 install -U pytest pylint
       - checkout
       # install
