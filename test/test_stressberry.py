@@ -1,0 +1,8 @@
+# -*- coding: utf-8 -*-
+#
+import stressberry
+
+
+def test():
+    stressberry.stress_cpu(1, 5)
+    return

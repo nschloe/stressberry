@@ -9,13 +9,16 @@ jobs:
       - image: ubuntu:17.10
     steps:
       - run: apt-get update
-      - run: apt-get install -y python3
-      - run: pip3 install -U pytest pytest-cov pylint meshio
+      - run: apt-get install -y python3 stress
+      - run: pip3 install -U pytest pylint
       - checkout
       # install
       - run: pip3 install .
       # lint
       - run: pylint stressberry
+      - run: pylint test/*.py
       - run: pylint setup.py
-      # The actual test
+      - run: pylint tools/stressberry-plot
+      - run: pylint tools/stressberry-run
+      # There is no actual test
       - run: cd test/ && pytest
