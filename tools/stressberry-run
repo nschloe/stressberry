@@ -2,25 +2,22 @@
 # -*- coding: utf-8 -*-
 #
 import argparse
-import time
+import psutil
 import sys
 import threading
+import time
 
 import stressberry
 
 
 def test():
     print('Cooldown...')
-    base_temp = stressberry.cooldown()
-    print('Base temperature {}°C.'.format(base_temp))
-    stressberry.stress_cpu(
-            num_cpus=4,
-            time=30,
-            measurement_interval=1,
-            )
+    stressberry.cooldown()
+
+    stressberry.stress_cpu(num_cpus=1, time=30)
+
     print('Cooldown...')
-    base_temp = stressberry.cooldown()
-    print('Base temperature {}°C.'.format(base_temp))
+    stressberry.cooldown()
     return
 
 
@@ -30,14 +27,18 @@ def _main():
     t = threading.Thread(target=test, args=())
     t.start()
 
+    interval = 1.0
+
     times = []
     temps = []
     freq = []
+    cpu_load = []
     while t.is_alive():
         times.append(time.time())
         temps.append(stressberry.measure_temp())
         freq.append(stressberry.measure_core_frequency())
-        t.join(1.0)
+        cpu_load.append(psutil.cpu_percent() / 100.0)
+        t.join(interval)
 
     # normalize times
     time0 = times[0]
@@ -45,10 +46,12 @@ def _main():
 
     print(len(times))
     print(times)
-    print(len(temps))
+    print()
     print(temps)
-    print(len(freq))
+    print()
     print(freq)
+    print()
+    print(cpu_load)
 
     return
 
