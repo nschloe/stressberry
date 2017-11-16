@@ -22,7 +22,7 @@ def _main(args):
     plt.xlim([data['time'][0], data['time'][-1]])
 
     if args.outfile is not None:
-        plt.savefig(args.outfile, transparent=True,  bbox_inches='tight')
+        plt.savefig(args.outfile, transparent=True, bbox_inches='tight')
     else:
         plt.show()
     return
