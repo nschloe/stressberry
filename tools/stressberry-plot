@@ -33,6 +33,8 @@ def _main(args):
     ax2.tick_params('y', colors=blue)
     ax2.set_ylim([0.0, 1.1])
 
+    ax1.set_zorder(ax2.get_zorder() + 1)
+
     if args.outfile is not None:
         plt.savefig(args.outfile, transparent=True)
     else:
