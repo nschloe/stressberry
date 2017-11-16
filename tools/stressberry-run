@@ -7,7 +7,6 @@ import time
 
 import argparse
 import datetime
-import psutil
 import yaml
 
 import stressberry
