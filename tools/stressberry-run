@@ -12,8 +12,7 @@ def _main():
     # args = _parse_cmd_arguments()
 
     print('Cooldown...')
-    time.sleep(60)
-    base_temp = stressberry.measure_temp()
+    base_temp = stressberry.cooldown()
     print('Base temperature {}°C.'.format(base_temp))
 
     times, temps, freq = stressberry.stress_cpu(
@@ -30,8 +29,8 @@ def _main():
     print(freq)
 
     print('Cooldown...')
-    while stressberry.measure_temp() > base_temp:
-        time.sleep(5)
+    base_temp = stressberry.cooldown()
+    print('Base temperature {}°C.'.format(base_temp))
     return
 
 

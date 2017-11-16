@@ -31,6 +31,19 @@ def stress_cpu(num_cpus, time, measurement_interval):
     return times, temps, freq
 
 
+def cooldown(interval=10):
+    '''Lets the cpu cool down until the temperature does not drop anymore.
+    '''
+    prev_tmp = measure_temp()
+    while True:
+        tme.sleep(interval)
+        tmp = measure_temp()
+        if tmp >= prev_tmp:
+            break
+        prev_tmp = tmp
+    return tmp
+
+
 def measure_temp():
     '''Returns the core temperature in Celsius.
     '''
