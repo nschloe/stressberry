@@ -14,15 +14,15 @@ loads, and it produces nice plots which can easily be compared.
 
 To run stressberry on your computer, simply install it with
 ```
-(sudo -H) pip3 install -U stressberry
+[sudo -H] pip3 install -U stressberry
 ```
 and run it with
 ```
 stressberry-run out.dat
 ```
 The run stresses the CPU for five minutes, lets it cool down, and stresses
-again with a higher load. The entire process takes about half and hour.
-
+again with a higher load, and so forth. The entire process takes about half an
+hour.
 The resulting data file can be displayed with
 ```
 stressberry-plot out.dat [out.png]
@@ -31,8 +31,8 @@ If you specify a PNG file, the image gets written to that.
 
 If you'd like to submit your own data for display here, feel free to
 [open an issue](https://github.com/nschloe/stressberry/issues) and include the
-data file, a photograph of your setup, and perhaps further information to be
-included here. All other suggestions are welcome as well.
+data file, a photograph of your setup, and perhaps some further information.
+All other suggestions are welcome as well!
 
 ### "Case" studies
 
