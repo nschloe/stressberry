@@ -1,41 +1,56 @@
 # -*- coding: utf-8 -*-
 #
+import re
 import subprocess
-from time import sleep
+import time as tme
 
 
-def start_stressing(num_cpus, time):
-
+def stress_cpu(num_cpus, time, measurement_interval):
     p = subprocess.Popen([
         'stress',
         '--cpu', str(num_cpus),
         '--timeout', '{}s'.format(time)
         ])
 
+    times = []
+    temps = []
+    freq = []
     while p.poll() is None:
-        print('Still stressing', measure_temp())
-        sleep(1)
+        times.append(tme.time())
+        temps.append(measure_temp())
+        freq.append(measure_core_frequency())
+        tme.sleep(measurement_interval)
+
+    # normalize times
+    time0 = times[0]
+    times = [t - time0 for t in times]
 
     assert p.returncode == 0, \
-        'Error! (return code {})'.format(p.returncode)
+        'stress exited with error (return code {})'.format(p.returncode)
 
-    # p = subprocess.Popen(
-    #     cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT
-    #     )
-    # if verbose:
-    #     while True:
-    #         line = p.stdout.readline()
-    #         if not line:
-    #             break
-    #         print(line.decode('utf-8'), end='')
-
-    # p.communicate()
-    # assert p.returncode == 0, \
-    #     'Gmsh exited with error (return code {}).'.format(p.returncode)
-    return
+    return times, temps, freq
 
 
 def measure_temp():
-    p = subprocess.Popen('vcgencmd measure_temp', stdout=subprocess.PIPE)
+    '''Returns the core temperature in Celsius.
+    '''
+    p = subprocess.Popen(['vcgencmd', 'measure_temp'], stdout=subprocess.PIPE)
     output, _error = p.communicate()
-    return output.replace('temp=', '')
+    output = output.decode('utf-8')
+    return float(output.replace('temp=', '').replace('\'C', ''))
+
+
+def measure_core_frequency():
+    '''Returns the processor frequency in Hz.
+    '''
+    p = subprocess.Popen(
+            ['vcgencmd', 'measure_clock', 'arm'],
+            stdout=subprocess.PIPE
+            )
+    output, _error = p.communicate()
+    output = output.decode('utf-8')
+
+    # frequency(45)=102321321
+    m = re.match('frequency\([0-9]+\)=([0-9]+)', output)
+    assert m is not None
+    return int(m.group(1))

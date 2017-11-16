@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 #
 import argparse
+import time
 import sys
 
 import stressberry
@@ -10,7 +11,27 @@ import stressberry
 def _main():
     # args = _parse_cmd_arguments()
 
-    stressberry.start_stressing(1, 10)
+    print('Cooldown...')
+    time.sleep(60)
+    base_temp = stressberry.measure_temp()
+    print('Base temperature {}°C.'.format(base_temp))
+
+    times, temps, freq = stressberry.stress_cpu(
+            num_cpus=4,
+            time=30,
+            measurement_interval=1,
+            )
+
+    print(len(times))
+    print(times)
+    print(len(temps))
+    print(temps)
+    print(len(freq))
+    print(freq)
+
+    print('Cooldown...')
+    while stressberry.measure_temp() > base_temp:
+        time.sleep(5)
     return
 
 
