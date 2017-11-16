@@ -29,23 +29,22 @@ stressberry-plot out.dat [out.png]
 ```
 If you specify a PNG file, the image gets written to that.
 
+If you'd like to submit your own data for display here, feel free to
+[open an issue](https://github.com/nschloe/stressberry/issues) and include the
+data file, a photograph of your setup, and perhaps further information to be
+included here. All other suggestions are welcome as well.
+
 ### "Case" studies
 
 #### The naked Raspberry Pi 3
 
 <img src="https://nschloe.github.io/stressberry/naked-photo.jpg" width="30%">
 
-<img src="https://nschloe.github.io/stressberry/naked-plot.png" width="50%">
+<img src="https://nschloe.github.io/stressberry/naked-plot.png" width="70%">
 
 The Raspberry Pi 3 without fans, heat sinks, or particular cases. The idle core
 temperature is about 47°C, under heavy load it reaches 80°C (at which point the
 CPU frequency is throttled).
-
-### Installation
-
-stressberry is [available from the Python Package Index](https://pypi.python.org/pypi/stressberry/),
-so with
-you can install/upgrade.
 
 ### Testing
 
