@@ -42,6 +42,14 @@ The Raspberry Pi 3 without fans, heat sinks, or particular cases. The idle core
 temperature is about 47°C, under heavy load it reaches 80°C (at which point the
 CPU frequency is throttled).
 
+#### A simple acryl case
+
+<img src="https://nschloe.github.io/stressberry/acryl-photo.jpg" width="30%">
+
+Your average acrylic case from eBay. Temperature measurements are bit warmer
+than with the naked Raspberry Pi, presumable because the case hinders the free
+air flow.
+
 ### Testing
 
 To run the tests, just check out this repository and type
