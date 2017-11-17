@@ -11,15 +11,27 @@ import stressberry
 
 
 def _main(args):
-    for f in args.infiles:
-        data = yaml.load(f)
-        plt.plot(data['time'], data['temperature'], label=data['name'])
+
+    data = [yaml.load(f) for f in args.infiles]
+
+    # sort the data such that the data series with the lowest terminal
+    # temperature is plotted last (and appears int he legend last)
+    terminal_temps = [d['temperature'][-1] for d in data]
+    order = [
+        i[0] for i in sorted(enumerate(terminal_temps), key=lambda x: x[1])
+        ]
+    # actually plot it
+    for k in order[::-1]:
+        plt.plot(
+            data[k]['time'], data[k]['temperature'],
+            label=data[k]['name']
+            )
 
     plt.grid()
     plt.legend(loc='upper left', bbox_to_anchor=(1.03, 1.0), borderaxespad=0)
     plt.xlabel('time (s)')
     plt.ylabel('temperature (°C)')
-    plt.xlim([data['time'][0], data['time'][-1]])
+    plt.xlim([data[-1]['time'][0], data[-1]['time'][-1]])
 
     if args.outfile is not None:
         plt.savefig(args.outfile, transparent=True, bbox_inches='tight')
