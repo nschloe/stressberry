@@ -5,7 +5,7 @@ Stress tests for the Raspberry Pi.
 [![CircleCI](https://img.shields.io/circleci/project/github/nschloe/stressberry/master.svg)](https://circleci.com/gh/nschloe/stressberry/tree/master)
 [![awesome](https://img.shields.io/badge/awesome-yes-brightgreen.svg)](https://img.shields.io/badge/awesome-yes-brightgreen.svg)
 [![PyPi Version](https://img.shields.io/pypi/v/stressberry.svg)](https://pypi.python.org/pypi/stressberry)
-[![GitHub stars](https://img.shields.io/github/stars/nschloe/stressberry.svg?style=social&label=Stars&maxAge=2592000)](https://github.com/nschloe/stressberry)
+[![GitHub stars](https://img.shields.io/github/stars/nschloe/stressberry.svg?style=social&label=Stars)](https://github.com/nschloe/stressberry)
 
 <img src="https://nschloe.github.io/stressberry/all.png" width="70%">
 
@@ -16,6 +16,7 @@ loads, and it produces nice plots which can easily be compared.
 
 To run stressberry on your computer, simply install it with
 ```
+[sudo] apt install stress
 [sudo -H] pip3 install -U stressberry
 ```
 and run it with
