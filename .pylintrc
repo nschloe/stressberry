@@ -1,5 +1,6 @@
 [MESSAGES CONTROL]
 
 disable=
+    duplicate-code,
     invalid-name,
     missing-docstring,

@@ -3,9 +3,9 @@
 Stress tests for the Raspberry Pi.
 
 [![CircleCI](https://img.shields.io/circleci/project/github/nschloe/stressberry/master.svg)](https://circleci.com/gh/nschloe/stressberry/tree/master)
-[![awesome](https://img.shields.io/badge/awesome-yes-brightgreen.svg)](https://img.shields.io/badge/awesome-yes-brightgreen.svg)
+[![awesome](https://img.shields.io/badge/awesome-yes-brightgreen.svg)](https://github.com/nschloe/stressberry)
 [![PyPi Version](https://img.shields.io/pypi/v/stressberry.svg)](https://pypi.python.org/pypi/stressberry)
-[![GitHub stars](https://img.shields.io/github/stars/nschloe/stressberry.svg?style=social&label=Stars)](https://github.com/nschloe/stressberry)
+[![GitHub stars](https://img.shields.io/github/stars/nschloe/stressberry.svg?logo=github&label=Stars)](https://github.com/nschloe/stressberry)
 
 <img src="https://nschloe.github.io/stressberry/all.png" width="70%">
 
@@ -22,7 +22,7 @@ To run stressberry on your computer, simply install it with
 and run it with
 ```
 stressberry-run out.dat
-stressberry-plot out.dat [-o out.png]
+[MPLBACKEND=Agg] stressberry-plot out.dat [-o out.png]
 ```
 The run lets the CPU idle for a bit, then stresses it with maximum load for 5
 minutes, and lets it cool down afterwards. The entire process takes 10 minutes.
