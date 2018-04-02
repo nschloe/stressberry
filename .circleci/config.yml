@@ -1,24 +1,18 @@
 version: 2
 
 jobs:
-
-  # python3:
   build:
     working_directory: ~/stressberry
     docker:
-      - image: ubuntu:17.10
+      - image: ubuntu:18.04
     steps:
-      - run: apt-get update
-      - run: apt-get install -y python3-pip stress
+      - run: apt update
+      - run: apt install -y python3-pip stress
       - run: pip3 install -U pytest pylint
       - checkout
       # install
       - run: pip3 install .
       # lint
-      - run: pylint stressberry
-      - run: pylint test/*.py
-      - run: pylint setup.py
-      - run: pylint tools/stressberry-plot
-      - run: pylint tools/stressberry-run
+      - run: pylint setup.py stressberry/ test/*.py tools/stressberry-plot tools/stressberry-run
       # There is no actual test
       - run: cd test/ && pytest

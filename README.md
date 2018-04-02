@@ -5,7 +5,7 @@ Stress tests for the Raspberry Pi.
 [![CircleCI](https://img.shields.io/circleci/project/github/nschloe/stressberry/master.svg)](https://circleci.com/gh/nschloe/stressberry/tree/master)
 [![awesome](https://img.shields.io/badge/awesome-yes-brightgreen.svg)](https://github.com/nschloe/stressberry)
 [![PyPi Version](https://img.shields.io/pypi/v/stressberry.svg)](https://pypi.python.org/pypi/stressberry)
-[![GitHub stars](https://img.shields.io/github/stars/nschloe/stressberry.svg?style=social&label=Stars)](https://github.com/nschloe/stressberry)
+[![GitHub stars](https://img.shields.io/github/stars/nschloe/stressberry.svg?logo=github&label=Stars)](https://github.com/nschloe/stressberry)
 
 <img src="https://nschloe.github.io/stressberry/all.png" width="70%">
 
