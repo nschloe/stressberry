@@ -8,7 +8,7 @@ jobs:
     steps:
       - run: apt update
       - run: apt install -y python3-pip stress
-      - run: pip3 install -U pytest black flake8
+      - run: pip3 install -U pytest pytest-cov black flake8
       - checkout
       # format and lint
       - run: LC_ALL=C.UTF-8 black --check setup.py stressberry/ test/*.py
