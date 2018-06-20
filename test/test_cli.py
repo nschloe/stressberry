@@ -11,4 +11,6 @@ def test_run():
 
     outfile = tempfile.NamedTemporaryFile().name
     stressberry.cli.run([outfile, "-t", temperature_file, "-d", "12"])
+
+    stressberry.cli.plot([outfile])
     return
