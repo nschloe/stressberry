@@ -11,6 +11,7 @@ from .__about__ import (
     __status__,
 )
 
+from .main import stress_cpu
 from . import cli
 
 __all__ = [
@@ -21,6 +22,7 @@ __all__ = [
     "__version__",
     "__status__",
     "cli",
+    "stress_cpu",
 ]
 
 try:
