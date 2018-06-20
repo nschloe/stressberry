@@ -50,20 +50,10 @@ def measure_core_frequency():
     return int(m.group(1))
 
 
-def test_short():
+def test(duration):
     print("Idling...")
-    tme.sleep(150)
-    stress_cpu(4, time=300)
+    tme.sleep(0.25 * duration)
+    stress_cpu(4, time=0.5 * duration)
     print("Idling...")
-    tme.sleep(150)
-    return
-
-
-def test_long():
-    print("Idling...")
-    tme.sleep(600)
-    for num_cpus in range(1, 5):
-        stress_cpu(num_cpus, time=600)
-        print("Idling...")
-        tme.sleep(300)
+    tme.sleep(0.25 * duration)
     return

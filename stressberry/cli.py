@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 import yaml
 
 from .__about__ import __version__
-from .main import cooldown, test_short, measure_temp
+from .main import cooldown, test, measure_temp
 
 
 def _get_parser_run():
@@ -36,6 +36,13 @@ def _get_parser_run():
         default="/sys/class/thermal/thermal_zone0/temp",
         help="temperature file (default: /sys/class/thermal/thermal_zone0/temp)",
     )
+    parser.add_argument(
+        "-d",
+        "--duration",
+        type=int,
+        default=600,
+        help="test duration in seconds (default: 600)",
+    )
     parser.add_argument("outfile", type=argparse.FileType("w"), help="output data file")
     return parser
 
@@ -49,7 +56,7 @@ def run(argv=None):
     cooldown(filename=args.temperature_file)
 
     # Start the stress test in another thread
-    t = threading.Thread(target=test_short, args=())
+    t = threading.Thread(target=lambda: test(args.duration), args=())
     t.start()
 
     times = []
