@@ -6,62 +6,54 @@ import time as tme
 
 
 def stress_cpu(num_cpus, time):
-    subprocess.check_call([
-        'stress',
-        '--cpu', str(num_cpus),
-        '--timeout', '{}s'.format(time)
-        ])
+    subprocess.check_call(
+        ["stress", "--cpu", str(num_cpus), "--timeout", "{}s".format(time)]
+    )
     return
 
 
-def cooldown(interval=60):
-    '''Lets the CPU cool down until the temperature does not change anymore.
-    '''
-    prev_tmp = measure_temp()
+def cooldown(interval=60, filename="/sys/class/thermal/thermal_zone0/temp"):
+    """Lets the CPU cool down until the temperature does not change anymore.
+    """
+    prev_tmp = measure_temp(filename=filename)
     while True:
         tme.sleep(interval)
-        tmp = measure_temp()
+        tmp = measure_temp(filename=filename)
         if abs(tmp - prev_tmp) < 0.2:
             break
         prev_tmp = tmp
     return tmp
 
 
-def measure_temp():
-    '''Returns the core temperature in Celsius.
-    '''
-    output = subprocess.check_output(
-        ['vcgencmd', 'measure_temp']
-        ).decode('utf-8')
-    return float(output.replace('temp=', '').replace('\'C', ''))
+def measure_temp(filename="/sys/class/thermal/thermal_zone0/temp"):
+    """Returns the core temperature in Celsius.
+    """
+    with open(filename, "r") as f:
+        temp = float(f.read()) / 1000
+
+    # Usign vcgencmd is specific to the raspberry pi
+    # out = subprocess.check_output(["vcgencmd", "measure_temp"]).decode("utf-8")
+    # temp = float(out.replace("temp=", "").replace("'C", ""))
+
+    return temp
 
 
 def measure_core_frequency():
-    '''Returns the processor frequency in Hz.
-    '''
-    output = subprocess.check_output(
-        ['vcgencmd', 'measure_clock', 'arm']
-        ).decode('utf-8')
+    """Returns the processor frequency in Hz.
+    """
+    output = subprocess.check_output(["vcgencmd", "measure_clock", "arm"]).decode(
+        "utf-8"
+    )
 
     # frequency(45)=102321321
-    m = re.match('frequency\\([0-9]+\\)=([0-9]+)', output)
+    m = re.match("frequency\\([0-9]+\\)=([0-9]+)", output)
     return int(m.group(1))
 
 
-def test_short():
-    print('Idling...')
-    tme.sleep(150)
-    stress_cpu(4, time=300)
-    print('Idling...')
-    tme.sleep(150)
-    return
-
-
-def test_long():
-    print('Idling...')
-    tme.sleep(600)
-    for num_cpus in range(1, 5):
-        stress_cpu(num_cpus, time=600)
-        print('Idling...')
-        tme.sleep(300)
+def test(duration):
+    print("Idling...")
+    tme.sleep(0.25 * duration)
+    stress_cpu(4, time=0.5 * duration)
+    print("Idling...")
+    tme.sleep(0.25 * duration)
     return

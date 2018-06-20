@@ -16,12 +16,14 @@ upload: setup.py
 	rm -f dist/*
 	python3 setup.py sdist
 	python3 setup.py bdist_wheel --universal
-	# https://dustingram.com/articles/2018/03/16/markdown-descriptions-on-pypi
-	twine upload dist/*.tar.gz
-	twine upload dist/*.whl
+	twine upload dist/*
 
 publish: tag upload
 
 clean:
 	@find . | grep -E "(__pycache__|\.pyc|\.pyo$\)" | xargs rm -rf
 	@rm -rf *.egg-info/ build/ dist/
+
+lint:
+	black --check setup.py stressberry/ test/*.py
+	flake8 setup.py stressberry/ test/*.py
