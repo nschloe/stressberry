@@ -38,7 +38,6 @@ setup(
         "Topic :: Scientific/Engineering",
         "Topic :: Scientific/Engineering :: Mathematics",
     ],
-    scripts=["tools/stressberry-plot", "tools/stressberry-run"],
     entry_points={
         "console_scripts": [
             "stressberry-run = stressberry.cli:run",
