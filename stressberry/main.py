@@ -12,13 +12,13 @@ def stress_cpu(num_cpus, time):
     return
 
 
-def cooldown(interval=60):
+def cooldown(interval=60, filename="/sys/class/thermal/thermal_zone0/temp"):
     """Lets the CPU cool down until the temperature does not change anymore.
     """
-    prev_tmp = measure_temp()
+    prev_tmp = measure_temp(filename=filename)
     while True:
         tme.sleep(interval)
-        tmp = measure_temp()
+        tmp = measure_temp(filename=filename)
         if abs(tmp - prev_tmp) < 0.2:
             break
         prev_tmp = tmp

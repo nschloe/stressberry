@@ -29,6 +29,13 @@ def _get_parser_run():
         default="stressberry data",
         help="name the data set (default: 'stressberry data')",
     )
+    parser.add_argument(
+        "-t",
+        "--temperature-file",
+        type=str,
+        default="/sys/class/thermal/thermal_zone0/temp",
+        help="temperature file (default: /sys/class/thermal/thermal_zone0/temp)",
+    )
     parser.add_argument("outfile", type=argparse.FileType("w"), help="output data file")
     return parser
 
@@ -39,7 +46,7 @@ def run(argv=None):
 
     # Cool down first
     print("Cooldown...")
-    cooldown()
+    cooldown(filename=args.temperature_file)
 
     # Start the stress test in another thread
     t = threading.Thread(target=test_short, args=())
@@ -49,7 +56,7 @@ def run(argv=None):
     temps = []
     while t.is_alive():
         times.append(time.time())
-        temps.append(measure_temp())
+        temps.append(measure_temp(args.temperature_file))
         # Choose the sample interval such that we have a respectable number of
         # data points
         t.join(2.0)
