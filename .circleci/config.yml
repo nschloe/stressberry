@@ -8,11 +8,15 @@ jobs:
     steps:
       - run: apt update
       - run: apt install -y python3-pip stress
-      - run: pip3 install -U pytest pylint
+      - run: pip3 install -U pytest black flake8
       - checkout
+      # format and lint
+      - run: LC_ALL=C.UTF-8 black --check setup.py stressberry/ test/*.py
+      - run: flake8 setup.py stressberry/ test/*.py
       # install
       - run: pip3 install .
-      # lint
-      - run: pylint setup.py stressberry/ test/*.py tools/stressberry-plot tools/stressberry-run
       # There is no actual test
-      - run: cd test/ && pytest
+      - run: cd test/ && MPLBACKEND=Agg pytest --cov stressberry
+      # submit to codecov
+      - run: apt-get install -y curl
+      - run: bash <(curl -s https://codecov.io/bash)
