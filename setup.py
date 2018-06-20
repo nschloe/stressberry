@@ -9,7 +9,6 @@ from setuptools import setup, find_packages
 base_dir = os.path.abspath(os.path.dirname(__file__))
 about = {}
 with open(os.path.join(base_dir, "stressberry", "__about__.py"), "rb") as f:
-    # pylint: disable=exec-used
     exec(f.read(), about)
 
 
@@ -40,4 +39,10 @@ setup(
         "Topic :: Scientific/Engineering :: Mathematics",
     ],
     scripts=["tools/stressberry-plot", "tools/stressberry-run"],
+    entry_points={
+        "console_scripts": [
+            "stressberry-run = stressberry.cli:run",
+            "stressberry-plot = stressberry.cli:plot",
+        ]
+    },
 )
