@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 #
-import re
 import subprocess
 import time as tme
 
@@ -36,18 +35,6 @@ def measure_temp(filename="/sys/class/thermal/thermal_zone0/temp"):
     # temp = float(out.replace("temp=", "").replace("'C", ""))
 
     return temp
-
-
-def measure_core_frequency():
-    """Returns the processor frequency in Hz.
-    """
-    output = subprocess.check_output(["vcgencmd", "measure_clock", "arm"]).decode(
-        "utf-8"
-    )
-
-    # frequency(45)=102321321
-    m = re.match("frequency\\([0-9]+\\)=([0-9]+)", output)
-    return int(m.group(1))
 
 
 def test(duration):
