@@ -22,9 +22,6 @@ setup(
     version=about['__version__'],
     packages=find_packages(),
     url='https://github.com/nschloe/stressberry',
-    project_urls={
-        'Issues': 'https://github.com/nschloe/stressberry/issues',
-        },
     author=about['__author__'],
     author_email=about['__email__'],
     install_requires=[
