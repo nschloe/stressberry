@@ -14,8 +14,8 @@ from .main import cooldown, test_short, measure_temp
 
 def _get_parser_run():
     parser = argparse.ArgumentParser(
-        description='Run stress test for the Raspberry Pi.'
-        )
+        description="Run stress test for the Raspberry Pi."
+    )
     parser.add_argument(
         "--version",
         "-v",
@@ -23,16 +23,13 @@ def _get_parser_run():
         version="%(prog)s " + ("(version {})".format(__version__)),
     )
     parser.add_argument(
-        '-n', '--name',
+        "-n",
+        "--name",
         type=str,
-        default='stressberry data',
-        help='name the data set (default: \'stressberry data\')',
-        )
-    parser.add_argument(
-        'outfile',
-        type=argparse.FileType('w'),
-        help='output data file'
-        )
+        default="stressberry data",
+        help="name the data set (default: 'stressberry data')",
+    )
+    parser.add_argument("outfile", type=argparse.FileType("w"), help="output data file")
     return parser
 
 
@@ -41,7 +38,7 @@ def run(argv=None):
     args = parser.parse_args(argv)
 
     # Cool down first
-    print('Cooldown...')
+    print("Cooldown...")
     cooldown()
 
     # Start the stress test in another thread
@@ -56,24 +53,18 @@ def run(argv=None):
         # Choose the sample interval such that we have a respectable number of
         # data points
         t.join(2.0)
-        print('Current temperature: {}°C'.format(temps[-1]))
+        print("Current temperature: {}°C".format(temps[-1]))
 
     # normalize times
     time0 = times[0]
     times = [tm - time0 for tm in times]
 
     args.outfile.write(
-        '# This file was created by stressberry v{} on {}\n'
-        .format(__version__, datetime.datetime.now())
+        "# This file was created by stressberry v{} on {}\n".format(
+            __version__, datetime.datetime.now()
         )
-    yaml.dump(
-        {
-            'name': args.name,
-            'time': times,
-            'temperature': temps,
-        },
-        args.outfile
-        )
+    )
+    yaml.dump({"name": args.name, "time": times, "temperature": temps}, args.outfile)
     return
 
 
@@ -85,34 +76,27 @@ def plot(argv=None):
 
     # sort the data such that the data series with the lowest terminal
     # temperature is plotted last (and appears int he legend last)
-    terminal_temps = [d['temperature'][-1] for d in data]
-    order = [
-        i[0] for i in sorted(enumerate(terminal_temps), key=lambda x: x[1])
-        ]
+    terminal_temps = [d["temperature"][-1] for d in data]
+    order = [i[0] for i in sorted(enumerate(terminal_temps), key=lambda x: x[1])]
     # actually plot it
     for k in order[::-1]:
-        plt.plot(
-            data[k]['time'], data[k]['temperature'],
-            label=data[k]['name']
-            )
+        plt.plot(data[k]["time"], data[k]["temperature"], label=data[k]["name"])
 
     plt.grid()
-    plt.legend(loc='upper left', bbox_to_anchor=(1.03, 1.0), borderaxespad=0)
-    plt.xlabel('time (s)')
-    plt.ylabel('temperature (°C)')
-    plt.xlim([data[-1]['time'][0], data[-1]['time'][-1]])
+    plt.legend(loc="upper left", bbox_to_anchor=(1.03, 1.0), borderaxespad=0)
+    plt.xlabel("time (s)")
+    plt.ylabel("temperature (°C)")
+    plt.xlim([data[-1]["time"][0], data[-1]["time"][-1]])
 
     if args.outfile is not None:
-        plt.savefig(args.outfile, transparent=True, bbox_inches='tight')
+        plt.savefig(args.outfile, transparent=True, bbox_inches="tight")
     else:
         plt.show()
     return
 
 
 def _get_parser_plot():
-    parser = argparse.ArgumentParser(
-        description='Plot stress test data.'
-        )
+    parser = argparse.ArgumentParser(description="Plot stress test data.")
     parser.add_argument(
         "--version",
         "-v",
@@ -120,16 +104,17 @@ def _get_parser_plot():
         version="%(prog)s " + ("(version {})".format(__version__)),
     )
     parser.add_argument(
-        'infiles',
-        nargs='+',
-        type=argparse.FileType('r'),
-        help='input YAML file(s) (default: stdin)'
-        )
+        "infiles",
+        nargs="+",
+        type=argparse.FileType("r"),
+        help="input YAML file(s) (default: stdin)",
+    )
     parser.add_argument(
-        '-o', '--outfile',
+        "-o",
+        "--outfile",
         help=(
-            'if specified, the plot is written to this file '
-            '(default: show on screen)'
-            )
-        )
+            "if specified, the plot is written to this file "
+            "(default: show on screen)"
+        ),
+    )
     return parser
