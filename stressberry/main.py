@@ -28,8 +28,15 @@ def cooldown(interval=60):
 def measure_temp():
     """Returns the core temperature in Celsius.
     """
-    output = subprocess.check_output(["vcgencmd", "measure_temp"]).decode("utf-8")
-    return float(output.replace("temp=", "").replace("'C", ""))
+    filename = "/sys/class/thermal/thermal_zone0/temp"
+    with open(filename, "r") as f:
+        temp = float(f.read()) / 1000
+
+    # Usign vcgencmd is specific to the raspberry pi
+    # out = subprocess.check_output(["vcgencmd", "measure_temp"]).decode("utf-8")
+    # temp = float(out.replace("temp=", "").replace("'C", ""))
+
+    return temp
 
 
 def measure_core_frequency():
