@@ -10,5 +10,5 @@ def test_run():
         f.write("12345")
 
     outfile = tempfile.NamedTemporaryFile().name
-    stressberry.cli.run([outfile, "-t", temperature_file, "-d", 12])
+    stressberry.cli.run([outfile, "-t", temperature_file, "-d", "12"])
     return
