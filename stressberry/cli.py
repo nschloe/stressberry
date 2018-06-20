@@ -1,7 +1,5 @@
-#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 #
-import sys
 import threading
 import time
 
@@ -10,45 +8,8 @@ import datetime
 import matplotlib.pyplot as plt
 import yaml
 
-import stressberry
-
-
-def run(args):
-    # Cool down first
-    print('Cooldown...')
-    stressberry.cooldown()
-
-    # Start the stress test in another thread
-    t = threading.Thread(target=stressberry.test_short, args=())
-    t.start()
-
-    times = []
-    temps = []
-    while t.is_alive():
-        times.append(time.time())
-        temps.append(stressberry.measure_temp())
-        # Choose the sample interval such that we have a respectable number of
-        # data points
-        t.join(2.0)
-        print('Current temperature: {}°C'.format(temps[-1]))
-
-    # normalize times
-    time0 = times[0]
-    times = [tm - time0 for tm in times]
-
-    args.outfile.write(
-        '# This file was created by stressberry v{} on {}\n'
-        .format(stressberry.__version__, datetime.datetime.now())
-        )
-    yaml.dump(
-        {
-            'name': args.name,
-            'time': times,
-            'temperature': temps,
-        },
-        args.outfile
-        )
-    return
+from .__about__ import __version__
+from .main import cooldown, test_short, measure_temp
 
 
 def _get_parser_run():
@@ -56,13 +17,11 @@ def _get_parser_run():
         description='Run stress test for the Raspberry Pi.'
         )
     parser.add_argument(
-        '-v', '--version',
-        help='display version information',
-        action='version',
-        version='stressberry {}, Python {}'.format(
-            stressberry.__version__, sys.version
-            )
-        )
+        "--version",
+        "-v",
+        action="version",
+        version="%(prog)s " + ("(version {})".format(__version__)),
+    )
     parser.add_argument(
         '-n', '--name',
         type=str,
@@ -77,7 +36,50 @@ def _get_parser_run():
     return parser
 
 
-def plot(args):
+def run(argv=None):
+    parser = _get_parser_run()
+    args = parser.parse_args(argv)
+
+    # Cool down first
+    print('Cooldown...')
+    cooldown()
+
+    # Start the stress test in another thread
+    t = threading.Thread(target=test_short, args=())
+    t.start()
+
+    times = []
+    temps = []
+    while t.is_alive():
+        times.append(time.time())
+        temps.append(measure_temp())
+        # Choose the sample interval such that we have a respectable number of
+        # data points
+        t.join(2.0)
+        print('Current temperature: {}°C'.format(temps[-1]))
+
+    # normalize times
+    time0 = times[0]
+    times = [tm - time0 for tm in times]
+
+    args.outfile.write(
+        '# This file was created by stressberry v{} on {}\n'
+        .format(__version__, datetime.datetime.now())
+        )
+    yaml.dump(
+        {
+            'name': args.name,
+            'time': times,
+            'temperature': temps,
+        },
+        args.outfile
+        )
+    return
+
+
+def plot(argv=None):
+    parser = _get_parser_plot()
+    args = parser.parse_args(argv)
 
     data = [yaml.load(f) for f in args.infiles]
 
@@ -112,13 +114,11 @@ def _get_parser_plot():
         description='Plot stress test data.'
         )
     parser.add_argument(
-        '-v', '--version',
-        help='display version information',
-        action='version',
-        version='stressberry {}, Python {}'.format(
-            stressberry.__version__, sys.version
-            )
-        )
+        "--version",
+        "-v",
+        action="version",
+        version="%(prog)s " + ("(version {})".format(__version__)),
+    )
     parser.add_argument(
         'infiles',
         nargs='+',

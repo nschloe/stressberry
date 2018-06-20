@@ -8,11 +8,20 @@ from .__about__ import (
     __copyright__,
     __license__,
     __version__,
-    __maintainer__,
     __status__,
 )
 
-from .main import *
+from . import cli
+
+__all__ = [
+    "__author__",
+    "__email__",
+    "__copyright__",
+    "__license__",
+    "__version__",
+    "__status__",
+    "cli",
+]
 
 try:
     import pipdate
