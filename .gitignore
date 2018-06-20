@@ -2,7 +2,6 @@
 *.swp
 *.prof
 MANIFEST
-README.rst
 dist/
 build/
 .coverage
@@ -10,3 +9,4 @@ build/
 *.egg-info/
 *.dat
 *.png
+.pytest_cache/
