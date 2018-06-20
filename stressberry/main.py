@@ -25,10 +25,9 @@ def cooldown(interval=60):
     return tmp
 
 
-def measure_temp():
+def measure_temp(filename="/sys/class/thermal/thermal_zone0/temp"):
     """Returns the core temperature in Celsius.
     """
-    filename = "/sys/class/thermal/thermal_zone0/temp"
     with open(filename, "r") as f:
         temp = float(f.read()) / 1000
 
