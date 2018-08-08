@@ -1,6 +1,6 @@
 # stressberry
 
-Stress tests for the Raspberry Pi.
+Stress tests and temperature plots for the Raspberry Pi.
 
 [![CircleCI](https://img.shields.io/circleci/project/github/nschloe/stressberry/master.svg)](https://circleci.com/gh/nschloe/stressberry/tree/master)
 [![codecov](https://img.shields.io/codecov/c/github/nschloe/stressberry.svg)](https://codecov.io/gh/nschloe/stressberry)
@@ -9,7 +9,7 @@ Stress tests for the Raspberry Pi.
 [![PyPi Version](https://img.shields.io/pypi/v/stressberry.svg)](https://pypi.org/project/stressberry)
 [![GitHub stars](https://img.shields.io/github/stars/nschloe/stressberry.svg?logo=github&label=Stars)](https://github.com/nschloe/stressberry)
 
-<img src="https://nschloe.github.io/stressberry/all.png" width="70%">
+<img src="https://nschloe.github.io/stressberry/all.svg" width="70%">
 
 There are a million ways to cool down your Raspberry Pi: Small heat sinks,
 specific cases, and some [extreme DIY solutions](https://youtu.be/WfQMLInuwws).
@@ -24,8 +24,11 @@ To run stressberry on your computer, simply install it with
 and run it with
 ```
 stressberry-run out.dat
-[MPLBACKEND=Agg] stressberry-plot out.dat [-o out.png]
+stressberry-plot out.dat -o out.png
 ```
+(Use `MPLBACKEND=Agg stressberry-plot out.dat -o out.png` if you're running the script
+on the Raspberry Pi itself.)
+
 The run lets the CPU idle for a bit, then stresses it with maximum load for 5
 minutes, and lets it cool down afterwards. The entire process takes 10 minutes.
 The resulting data is displayed to a screen or, if specified, written to a PNG
