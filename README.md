@@ -24,8 +24,11 @@ To run stressberry on your computer, simply install it with
 and run it with
 ```
 stressberry-run out.dat
-[MPLBACKEND=Agg] stressberry-plot out.dat [-o out.png]
+stressberry-plot out.dat -o out.png
 ```
+(Use `MPLBACKEND=Agg stressberry-plot out.dat -o out.png` if you're running the script
+on the Raspberry Pi itself.)
+
 The run lets the CPU idle for a bit, then stresses it with maximum load for 5
 minutes, and lets it cool down afterwards. The entire process takes 10 minutes.
 The resulting data is displayed to a screen or, if specified, written to a PNG
