@@ -7,7 +7,7 @@ Stress tests and temperature plots for the Raspberry Pi.
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
 [![awesome](https://img.shields.io/badge/awesome-yes-brightgreen.svg)](https://github.com/nschloe/stressberry)
 [![PyPi Version](https://img.shields.io/pypi/v/stressberry.svg)](https://pypi.org/project/stressberry)
-[![GitHub stars](https://img.shields.io/github/stars/nschloe/stressberry.svg?logo=github&label=Stars)](https://github.com/nschloe/stressberry)
+[![GitHub stars](https://img.shields.io/github/stars/nschloe/stressberry.svg?logo=github&label=Stars&logoColor=white)](https://github.com/nschloe/stressberry)
 
 <img src="https://nschloe.github.io/stressberry/all.svg" width="70%">
 
@@ -65,6 +65,13 @@ $17. It's basically a full-body aluminum alloy case with heat pads for the CPU
 and the RAM chip. The heat is dissipated _very_ well and in fact beats
 every other solution I've seen so far,
 including [the extreme DIY passive cooling setup](https://youtu.be/WfQMLInuwws).
+
+#### A Pasberry Pi 3B+ with a FLIRC case
+
+<img src="https://nschloe.github.io/stressberry/flirc-photo.jpg" width="30%">
+
+The famous [FLIRC case](https://flirc.tv/more/raspberry-pi-case).
+Thanks to @RichardKav for the measurements.
 
 
 ### Testing
