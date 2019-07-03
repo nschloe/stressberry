@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-#
 import codecs
 import os
 
@@ -23,7 +21,7 @@ setup(
     url="https://github.com/nschloe/stressberry",
     author=about["__author__"],
     author_email=about["__email__"],
-    install_requires=["matplotlib", "pyyaml", "pipdate >=0.3.0, <0.4.0"],
+    install_requires=["matplotlib", "pyyaml"],
     description="Stress tests for the Raspberry Pi",
     long_description=read("README.md"),
     long_description_content_type="text/markdown",
@@ -33,7 +31,6 @@ setup(
         about["__status__"],
         "Operating System :: OS Independent",
         "Programming Language :: Python",
-        "Programming Language :: Python :: 2",
         "Programming Language :: Python :: 3",
         "Topic :: Scientific/Engineering",
         "Topic :: Scientific/Engineering :: Mathematics",
