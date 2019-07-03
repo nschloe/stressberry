@@ -1,13 +1,13 @@
+import argparse
+import datetime
 import threading
 import time
 
-import argparse
-import datetime
 import matplotlib.pyplot as plt
 import yaml
 
 from .__about__ import __version__
-from .main import cooldown, test, measure_temp
+from .main import cooldown, measure_temp, test
 
 
 def _get_parser_run():
