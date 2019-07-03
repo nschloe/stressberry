@@ -2,12 +2,12 @@
 
 Stress tests and temperature plots for the Raspberry Pi.
 
-[![CircleCI](https://img.shields.io/circleci/project/github/nschloe/stressberry/master.svg)](https://circleci.com/gh/nschloe/stressberry/tree/master)
-[![codecov](https://img.shields.io/codecov/c/github/nschloe/stressberry.svg)](https://codecov.io/gh/nschloe/stressberry)
-[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
-[![awesome](https://img.shields.io/badge/awesome-yes-brightgreen.svg)](https://github.com/nschloe/stressberry)
-[![PyPi Version](https://img.shields.io/pypi/v/stressberry.svg)](https://pypi.org/project/stressberry)
-[![GitHub stars](https://img.shields.io/github/stars/nschloe/stressberry.svg?logo=github&label=Stars&logoColor=white)](https://github.com/nschloe/stressberry)
+[![CircleCI](https://img.shields.io/circleci/project/github/nschloe/stressberry/master.svg?style=flat-square)](https://circleci.com/gh/nschloe/stressberry/tree/master)
+[![codecov](https://img.shields.io/codecov/c/github/nschloe/stressberry.svg?style=flat-square)](https://codecov.io/gh/nschloe/stressberry)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg?style=flat-square)](https://github.com/ambv/black)
+[![awesome](https://img.shields.io/badge/awesome-yes-brightgreen.svg?style=flat-square)](https://github.com/nschloe/stressberry)
+[![PyPi Version](https://img.shields.io/pypi/v/stressberry.svg?style=flat-square)](https://pypi.org/project/stressberry)
+[![GitHub stars](https://img.shields.io/github/stars/nschloe/stressberry.svg?style=flat-square&logo=github&label=Stars&logoColor=white)](https://github.com/nschloe/stressberry)
 
 <img src="https://nschloe.github.io/stressberry/all.svg" width="70%">
 
