@@ -1,13 +1,28 @@
 import argparse
 import datetime
+import sys
 import threading
 import time
 
 import matplotlib.pyplot as plt
 import yaml
 
-from .__about__ import __version__
+from .__about__ import __copyright__, __version__
 from .main import cooldown, measure_temp, test
+
+
+def _get_version_text():
+    return "\n".join(
+        [
+            "stressberry {} [Python {}.{}.{}]".format(
+                __version__,
+                sys.version_info.major,
+                sys.version_info.minor,
+                sys.version_info.micro,
+            ),
+            __copyright__,
+        ]
+    )
 
 
 def _get_parser_run():
@@ -15,10 +30,7 @@ def _get_parser_run():
         description="Run stress test for the Raspberry Pi."
     )
     parser.add_argument(
-        "--version",
-        "-v",
-        action="version",
-        version="%(prog)s " + ("(version {})".format(__version__)),
+        "--version", "-v", action="version", version=_get_version_text()
     )
     parser.add_argument(
         "-n",
@@ -84,7 +96,7 @@ def plot(argv=None):
     parser = _get_parser_plot()
     args = parser.parse_args(argv)
 
-    data = [yaml.load(f) for f in args.infiles]
+    data = [yaml.load(f, Loader=yaml.SafeLoader) for f in args.infiles]
 
     # sort the data such that the data series with the lowest terminal
     # temperature is plotted last (and appears int he legend last)
@@ -99,6 +111,8 @@ def plot(argv=None):
     plt.xlabel("time (s)")
     plt.ylabel("temperature (°C)")
     plt.xlim([data[-1]["time"][0], data[-1]["time"][-1]])
+    if args.temp_lims:
+        plt.ylim(*args.temp_lims)
 
     if args.outfile is not None:
         plt.savefig(args.outfile, transparent=True, bbox_inches="tight")
@@ -110,10 +124,7 @@ def plot(argv=None):
 def _get_parser_plot():
     parser = argparse.ArgumentParser(description="Plot stress test data.")
     parser.add_argument(
-        "--version",
-        "-v",
-        action="version",
-        version="%(prog)s " + ("(version {})".format(__version__)),
+        "--version", "-v", action="version", version=_get_version_text()
     )
     parser.add_argument(
         "infiles",
@@ -128,5 +139,13 @@ def _get_parser_plot():
             "if specified, the plot is written to this file "
             "(default: show on screen)"
         ),
+    )
+    parser.add_argument(
+        "-t",
+        "--temp-lims",
+        type=float,
+        nargs=2,
+        default=None,
+        help="limits for the temperature (default: data limits)",
     )
     return parser
