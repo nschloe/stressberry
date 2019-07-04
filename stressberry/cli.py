@@ -84,7 +84,7 @@ def plot(argv=None):
     parser = _get_parser_plot()
     args = parser.parse_args(argv)
 
-    data = [yaml.load(f) for f in args.infiles]
+    data = [yaml.load(f, Loader=yaml.SafeLoader) for f in args.infiles]
 
     # sort the data such that the data series with the lowest terminal
     # temperature is plotted last (and appears int he legend last)
@@ -99,6 +99,8 @@ def plot(argv=None):
     plt.xlabel("time (s)")
     plt.ylabel("temperature (°C)")
     plt.xlim([data[-1]["time"][0], data[-1]["time"][-1]])
+    if args.temp_lims:
+        plt.ylim(*args.temp_lims)
 
     if args.outfile is not None:
         plt.savefig(args.outfile, transparent=True, bbox_inches="tight")
@@ -128,5 +130,13 @@ def _get_parser_plot():
             "if specified, the plot is written to this file "
             "(default: show on screen)"
         ),
+    )
+    parser.add_argument(
+        "-t",
+        "--temp-lims",
+        type=float,
+        nargs=2,
+        default=None,
+        help="limits for the temperature (default: data limits)",
     )
     return parser
