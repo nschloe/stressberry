@@ -1,13 +1,28 @@
 import argparse
 import datetime
+import sys
 import threading
 import time
 
 import matplotlib.pyplot as plt
 import yaml
 
-from .__about__ import __version__
+from .__about__ import __copyright__, __version__
 from .main import cooldown, measure_temp, test
+
+
+def _get_version_text():
+    return "\n".join(
+        [
+            "stressberry {} [Python {}.{}.{}]".format(
+                __version__,
+                sys.version_info.major,
+                sys.version_info.minor,
+                sys.version_info.micro,
+            ),
+            __copyright__,
+        ]
+    )
 
 
 def _get_parser_run():
@@ -15,10 +30,7 @@ def _get_parser_run():
         description="Run stress test for the Raspberry Pi."
     )
     parser.add_argument(
-        "--version",
-        "-v",
-        action="version",
-        version="%(prog)s " + ("(version {})".format(__version__)),
+        "--version", "-v", action="version", version=_get_version_text()
     )
     parser.add_argument(
         "-n",
@@ -112,10 +124,7 @@ def plot(argv=None):
 def _get_parser_plot():
     parser = argparse.ArgumentParser(description="Plot stress test data.")
     parser.add_argument(
-        "--version",
-        "-v",
-        action="version",
-        version="%(prog)s " + ("(version {})".format(__version__)),
+        "--version", "-v", action="version", version=_get_version_text()
     )
     parser.add_argument(
         "infiles",
