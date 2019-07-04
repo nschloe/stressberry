@@ -11,11 +11,14 @@
 
 Stress tests and temperature plots for the Raspberry Pi.
 
-<img src="https://nschloe.github.io/stressberry/3b.svg" width="100%"> |
-<img src="https://nschloe.github.io/stressberry/3b+.svg" width="100%"> |
-<img src="https://nschloe.github.io/stressberry/4b.svg" width="100%">
-:-----------------:|:-----------------:|:-------:|
-RPI 3B             |  RPI 3B+          |  RPI 4  |
+#### Raspberry Pi 4B
+<img src="https://nschloe.github.io/stressberry/4b.svg" width="70%">
+
+#### Raspberry Pi 3B+
+<img src="https://nschloe.github.io/stressberry/3b+.svg" width="70%">
+
+#### Raspberry Pi 3B
+<img src="https://nschloe.github.io/stressberry/3b.svg" width="70%">
 
 There are a million ways to cool down your Raspberry Pi: Small heat sinks, specific
 cases, and some [extreme DIY solutions](https://youtu.be/WfQMLInuwws).  stressberry is a
