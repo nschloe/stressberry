@@ -11,7 +11,11 @@
 
 Stress tests and temperature plots for the Raspberry Pi.
 
-<img src="https://nschloe.github.io/stressberry/all.svg" width="70%">
+<img src="https://nschloe.github.io/stressberry/3b.svg" width="25%"> |
+<img src="https://nschloe.github.io/stressberry/3b+.svg" width="25%"> |
+<img src="https://nschloe.github.io/stressberry/4b.svg" width="25%">
+:-----------------:|:-----------------:|:-------:|
+RPI 3B             |  RPI 3B+          |  RPI 4  |
 
 There are a million ways to cool down your Raspberry Pi: Small heat sinks, specific
 cases, and some [extreme DIY solutions](https://youtu.be/WfQMLInuwws).  stressberry is a
@@ -65,12 +69,18 @@ basically a full-body aluminum alloy case with heat pads for the CPU and the RAM
 The heat is dissipated _very_ well and in fact beats every other solution I've seen so
 far, including [the extreme DIY passive cooling setup](https://youtu.be/WfQMLInuwws).
 
-#### A Pasberry Pi 3B+ with a FLIRC case
+#### A Rasberry Pi 3B+ with a FLIRC case
 
 <img src="https://nschloe.github.io/stressberry/flirc-photo.jpg" width="30%">
 
-The famous [FLIRC case](https://flirc.tv/more/raspberry-pi-case).  Thanks to @RichardKav
-for the measurements.
+The famous [FLIRC case](https://flirc.tv/more/raspberry-pi-case).
+Thanks to @RichardKav for the measurements!
+
+#### A Rasberry Pi 4B with fans
+
+<img src="https://nschloe.github.io/stressberry/rpi4-fans.jpg" width="40%">
+
+Thanks to @flyingferret for the measurements!
 
 ### Testing
 
