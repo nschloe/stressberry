@@ -11,9 +11,9 @@
 
 Stress tests and temperature plots for the Raspberry Pi.
 
-<img src="https://nschloe.github.io/stressberry/3b.svg" width="25%"> |
-<img src="https://nschloe.github.io/stressberry/3b+.svg" width="25%"> |
-<img src="https://nschloe.github.io/stressberry/4b.svg" width="25%">
+<img src="https://nschloe.github.io/stressberry/3b.svg" width="70%"> |
+<img src="https://nschloe.github.io/stressberry/3b+.svg" width="70%"> |
+<img src="https://nschloe.github.io/stressberry/4b.svg" width="70%">
 :-----------------:|:-----------------:|:-------:|
 RPI 3B             |  RPI 3B+          |  RPI 4  |
 
