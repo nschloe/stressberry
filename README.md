@@ -1,7 +1,6 @@
 <p align="center">
   <a href="https://github.com/nschloe/stressberry"><img alt="stressberry" src="https://nschloe.github.io/stressberry/stressberry.png" width="60%"></a>
-
-  Stress tests and temperature plots for the Raspberry Pi.
+  <p align="center">Stress tests and temperature plots for the Raspberry Pi</p>
 </p>
 
 [![CircleCI](https://img.shields.io/circleci/project/github/nschloe/stressberry/master.svg?style=flat-square)](https://circleci.com/gh/nschloe/stressberry/tree/master)
