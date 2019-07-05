@@ -38,9 +38,9 @@ Thanks to @RichardKav for the measurements!
 ### Raspberry Pi 3B
 <img src="https://nschloe.github.io/stressberry/3b.svg" width="70%">
 
-<img src="https://nschloe.github.io/stressberry/naked-photo.jpg" height="200"> |
-<img src="https://nschloe.github.io/stressberry/acryl-photo.jpg" height="200"> |
-<img src="https://nschloe.github.io/stressberry/fasttech-photo.jpg" height="200">
+<img src="https://nschloe.github.io/stressberry/naked-photo.jpg" height="100%"> |
+<img src="https://nschloe.github.io/stressberry/acryl-photo.jpg" height="100%"> |
+<img src="https://nschloe.github.io/stressberry/fasttech-photo.jpg" height="100%">
 :-------------------:|:------------------:|:----------:|
 No fans, heat sinks, or case. | Your average acrylic case from eBay. | [This FastTech case](https://www.fasttech.com/p/5299000), basically a full-body aluminum alloy case with heat pads for the CPU and the RAM chip..
 
