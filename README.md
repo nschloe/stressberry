@@ -42,9 +42,7 @@ Thanks to @RichardKav for the measurements!
 <img src="https://nschloe.github.io/stressberry/acryl-photo.jpg" width="100%"> |
 <img src="https://nschloe.github.io/stressberry/fasttech-photo.jpg" width="100%">
 :-------------------:|:------------------:|:----------:|
-The Raspberry Pi 3 without fans, heat sinks, or particular cases. The idle core temperature is about 47°C, under heavy load it reaches 80°C (at which point the CPU frequency is throttled). |
-Your average acrylic case from eBay. Temperature measurements are bit warmer than with the naked Raspberry Pi, presumable because the case hinders the free air flow. |
-I got [this case](https://www.fasttech.com/p/5299000) from FastTech for about $17. Basically a full-body aluminum alloy case with heat pads for the CPU and the RAM chip. The heat is dissipated _very_ well and in fact beats every other solution I've seen so far, including [the extreme DIY passive cooling setup](https://youtu.be/WfQMLInuwws).
+No fans, heat sinks, or case. The idle core temperature is about 47°C, under heavy load it reaches 80°C (at which point the CPU frequency is throttled). | Your average acrylic case from eBay. Temperature measurements are bit warmer than with the naked Raspberry Pi, presumable because the case hinders the free air flow. | I got [this case](https://www.fasttech.com/p/5299000) from FastTech for about $17. Basically a full-body aluminum alloy case with heat pads for the CPU and the RAM chip. The heat is dissipated _very_ well and in fact beats every other solution I've seen so far, including [the extreme DIY passive cooling setup](https://youtu.be/WfQMLInuwws).
 
 ### How to
 
