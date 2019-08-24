@@ -52,12 +52,12 @@ def test(duration, cores):
     if cores is None:
         cores = cpu_core_count()
 
-    print(f"Preparing to stress: [{cores}] CPU Cores for [{stress_duration}] seconds")
-    print(f"Idling for {idle_duration} seconds...")
+    print("Preparing to stress: [{}] CPU Cores for [{}] seconds".format(cores, stress_duration))
+    print("Idling for {} seconds...".format(idle_duration))
     tme.sleep(idle_duration)
 
     stress_cpu(num_cpus=cores, time=stress_duration)
 
-    print(f"Idling for {idle_duration} seconds...")
+    print("Idling for {} seconds...".format(idle_duration))
     tme.sleep(idle_duration)
     return
