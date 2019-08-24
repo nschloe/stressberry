@@ -43,12 +43,9 @@ def cpu_core_count():
     return count
 
 
-def test(duration, cores):
+def test(stress_duration, idle_duration, cores):
     """Run stress test with 25% of test duration for idle before and after the stres
     """
-    stress_duration = 0.5 * duration
-    idle_duration = 0.25 * duration
-
     if cores is None:
         cores = cpu_core_count()
 

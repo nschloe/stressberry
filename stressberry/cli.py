@@ -50,8 +50,15 @@ def _get_parser_run():
         "-d",
         "--duration",
         type=int,
-        default=600,
-        help="test duration in seconds (default: 600)",
+        default=300,
+        help="stress test duration in seconds (default: 300)",
+    )
+    parser.add_argument(
+        "-i",
+        "--idle",
+        type=int,
+        default=150,
+        help="idle time in seconds at start and end of stress test (default: 150)",
     )
     parser.add_argument(
         "-c",
@@ -69,11 +76,14 @@ def run(argv=None):
     args = parser.parse_args(argv)
 
     # Cool down first
-    print("Cooldown...")
+    print("Awaiting stable baseline temperature...")
     cooldown(filename=args.temperature_file)
 
     # Start the stress test in another thread
-    t = threading.Thread(target=lambda: test(args.duration, args.cores), args=())
+    t = threading.Thread(
+        target=lambda: test(args.duration, args.idle, args.cores),
+        args=()
+    )
     t.start()
 
     times = []
