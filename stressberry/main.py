@@ -17,7 +17,12 @@ def cooldown(interval=60, filename="/sys/class/thermal/thermal_zone0/temp"):
     while True:
         tme.sleep(interval)
         tmp = measure_temp(filename=filename)
-        print("Current temperature: {}°C - Previous temperature: {}°C".format(tmp, prev_tmp), end="\r")
+        print(
+            "Current temperature: {}°C - Previous temperature: {}°C".format(
+                tmp, prev_tmp
+            ),
+            end="\r",
+        )
         if abs(tmp - prev_tmp) < 0.2:
             break
         prev_tmp = tmp

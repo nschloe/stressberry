@@ -86,7 +86,7 @@ def _get_parser_run():
     parser.add_argument(
         "--disable-vcgencmd",
         help="Do not use Raspberry Pi vcgencmd to collect measurements, even if available. Use files instead.",
-        action="store_true"
+        action="store_true",
     )
     parser.add_argument("outfile", type=argparse.FileType("w"), help="output data file")
     return parser
