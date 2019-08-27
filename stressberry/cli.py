@@ -118,11 +118,11 @@ def run(argv=None):
             freqs.append(measure_core_frequency(args.frequency_file, use_vcgencmd))
             print(
                 "Current temperature: {}°C. Frequency: {}MHz".format(
-                    temps[-1], freqs[-1]
+                    temps[-1], freqs[-1], end="\r"
                 )
             )
         else:
-            print("Current temperature: {}°C".format(temps[-1]))
+            print("Current temperature: {}°C".format(temps[-1]), end="\r")
         # Choose the sample interval such that we have a respectable number of
         # data points
         t.join(2.0)
