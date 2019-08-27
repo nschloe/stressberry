@@ -8,7 +8,13 @@ import matplotlib.pyplot as plt
 import yaml
 
 from .__about__ import __copyright__, __version__
-from .main import cooldown, measure_temp, test
+from .main import (
+    cooldown,
+    measure_temp,
+    measure_core_frequency,
+    test,
+    vcgencmd_avaialble,
+)
 
 
 def _get_version_text():
@@ -44,7 +50,7 @@ def _get_parser_run():
         "--temperature-file",
         type=str,
         default="/sys/class/thermal/thermal_zone0/temp",
-        help="temperature file (default: /sys/class/thermal/thermal_zone0/temp)",
+        help="temperature file. Must be used in conjunction with --disable-vcgencmd if vcgencmd exists (default: /sys/class/thermal/thermal_zone0/temp)",
     )
     parser.add_argument(
         "-d",
@@ -67,6 +73,21 @@ def _get_parser_run():
         default=None,
         help="number of cpu cores to stress (default: all)",
     )
+    parser.add_argument(
+        "-f", "--frequency", help="measure cpu core frequency", action="store_true"
+    )
+    parser.add_argument(
+        "-ff",
+        "--frequency-file",
+        type=str,
+        default="/sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq",
+        help="cpu core frequency file. Must be used in conjunction with --disable-vcgencmd if vcgencmd exists (default: /sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq)",
+    )
+    parser.add_argument(
+        "--disable-vcgencmd",
+        help="Do not use Raspberry Pi vcgencmd to collect measurements, even if available. Use files instead.",
+        action="store_true"
+    )
     parser.add_argument("outfile", type=argparse.FileType("w"), help="output data file")
     return parser
 
@@ -75,26 +96,36 @@ def run(argv=None):
     parser = _get_parser_run()
     args = parser.parse_args(argv)
 
+    use_vcgencmd = vcgencmd_avaialble() and not args.disable_vcgencmd
+
     # Cool down first
     print("Awaiting stable baseline temperature...")
     cooldown(filename=args.temperature_file)
 
     # Start the stress test in another thread
     t = threading.Thread(
-        target=lambda: test(args.duration, args.idle, args.cores),
-        args=()
+        target=lambda: test(args.duration, args.idle, args.cores), args=()
     )
     t.start()
 
     times = []
     temps = []
+    freqs = []
     while t.is_alive():
         times.append(time.time())
-        temps.append(measure_temp(args.temperature_file))
+        temps.append(measure_temp(args.temperature_file, use_vcgencmd))
+        if args.frequency:
+            freqs.append(measure_core_frequency(args.frequency_file, use_vcgencmd))
+            print(
+                "Current temperature: {}°C. Frequency: {}MHz".format(
+                    temps[-1], freqs[-1]
+                )
+            )
+        else:
+            print("Current temperature: {}°C".format(temps[-1]))
         # Choose the sample interval such that we have a respectable number of
         # data points
         t.join(2.0)
-        print("Current temperature: {}°C".format(temps[-1]))
 
     # normalize times
     time0 = times[0]
@@ -105,7 +136,15 @@ def run(argv=None):
             __version__, datetime.datetime.now()
         )
     )
-    yaml.dump({"name": args.name, "time": times, "temperature": temps}, args.outfile)
+    yaml.dump(
+        {
+            "name": args.name,
+            "time": times,
+            "temperature": temps,
+            "cpu frequency": freqs,
+        },
+        args.outfile,
+    )
     return
 
 
@@ -130,6 +169,21 @@ def plot(argv=None):
     plt.xlim([data[-1]["time"][0], data[-1]["time"][-1]])
     if args.temp_lims:
         plt.ylim(*args.temp_lims)
+
+    # Only plot frequencies when using a single input file
+    if len(data) == 1 and args.frequency:
+        ax2 = plt.twinx()
+        ax2.set_ylabel("core frequency (MHz)")
+        try:
+            for k in order[::-1]:
+                ax2.plot(
+                    data[k]["time"],
+                    data[k]["cpu frequency"],
+                    label=data[k]["name"],
+                    color="C1",
+                )
+        except KeyError():
+            print("Source data does not contain cpu frequency data.")
 
     if args.outfile is not None:
         plt.savefig(args.outfile, transparent=True, bbox_inches="tight")
@@ -164,5 +218,11 @@ def _get_parser_plot():
         nargs=2,
         default=None,
         help="limits for the temperature (default: data limits)",
+    )
+    parser.add_argument(
+        "-f",
+        "--frequency",
+        help="plot cpu core frequency (single input files only)",
+        action="store_true",
     )
     return parser

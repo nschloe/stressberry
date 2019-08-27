@@ -23,17 +23,44 @@ def cooldown(interval=60, filename="/sys/class/thermal/thermal_zone0/temp"):
     return tmp
 
 
-def measure_temp(filename="/sys/class/thermal/thermal_zone0/temp"):
+def measure_temp(filename="/sys/class/thermal/thermal_zone0/temp", use_vcgencmd=False):
     """Returns the core temperature in Celsius.
     """
-    with open(filename, "r") as f:
-        temp = float(f.read()) / 1000
-
-    # Usign vcgencmd is specific to the raspberry pi
-    # out = subprocess.check_output(["vcgencmd", "measure_temp"]).decode("utf-8")
-    # temp = float(out.replace("temp=", "").replace("'C", ""))
-
+    if use_vcgencmd:
+        # Usign vcgencmd is specific to the raspberry pi
+        out = subprocess.check_output(["vcgencmd", "measure_temp"]).decode("utf-8")
+        temp = float(out.replace("temp=", "").replace("'C", ""))
+    else:
+        with open(filename, "r") as f:
+            temp = float(f.read()) / 1000
     return temp
+
+
+def measure_core_frequency(
+    filename="/sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq", use_vcgencmd=False
+):
+    """Returns the CPU frequency in MHz
+    """
+    if use_vcgencmd:
+        # Only vcgencmd measure_clock arm is accurate on Raspberry Pi.
+        # Per: https://www.raspberrypi.org/forums/viewtopic.php?f=63&t=219358&start=25
+        # TODO: May also need to look at: vcgencmd get_throttled
+        out = subprocess.check_output(["vcgencmd", "measure_clock arm"]).decode("utf-8")
+        frequency = int(int(out.split("=")[1]) / 1000000)
+    else:
+        with open(filename, "r") as f:
+            frequency = int(f.read()) / 1000
+    return frequency
+
+
+def vcgencmd_avaialble():
+    """Returns true if vcgencmd is runable, false otherwise
+    """
+    try:
+        subprocess.call(["vcgencmd"])
+        return True
+    except OSError:
+        return False
 
 
 def cpu_core_count():
@@ -50,7 +77,11 @@ def test(stress_duration, idle_duration, cores):
     if cores is None:
         cores = cpu_core_count()
 
-    print("Preparing to stress: [{}] CPU Cores for [{}] seconds".format(cores, stress_duration))
+    print(
+        "Preparing to stress: [{}] CPU Cores for [{}] seconds".format(
+            cores, stress_duration
+        )
+    )
     print("Idling for {} seconds...".format(idle_duration))
     tme.sleep(idle_duration)
 
