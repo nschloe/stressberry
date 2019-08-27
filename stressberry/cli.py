@@ -186,7 +186,7 @@ def plot(argv=None):
             print("Source data does not contain cpu frequency data.")
 
     if args.outfile is not None:
-        plt.savefig(args.outfile, transparent=True, bbox_inches="tight")
+        plt.savefig(args.outfile, transparent=True, bbox_inches="tight", dpi=args.dpi)
     else:
         plt.show()
     return
@@ -218,6 +218,13 @@ def _get_parser_plot():
         nargs=2,
         default=None,
         help="limits for the temperature (default: data limits)",
+    )
+    parser.add_argument(
+        "-d",
+        "--dpi",
+        type=int,
+        default=None,
+        help="image resolution in dots per inch when written to file",
     )
     parser.add_argument(
         "-f",
