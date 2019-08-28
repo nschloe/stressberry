@@ -10,3 +10,4 @@ build/
 *.dat
 *.png
 .pytest_cache/
+.vscode/

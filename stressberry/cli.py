@@ -71,17 +71,17 @@ def _get_parser_run():
         "--cores",
         type=int,
         default=None,
-        help="number of cpu cores to stress (default: all)",
+        help="number of CPU cores to stress (default: all)",
     )
     parser.add_argument(
-        "-f", "--frequency", help="measure cpu core frequency", action="store_true"
+        "-f", "--frequency", help="measure CPU core frequency", action="store_true"
     )
     parser.add_argument(
         "-ff",
         "--frequency-file",
         type=str,
         default="/sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq",
-        help="cpu core frequency file. Must be used in conjunction with --disable-vcgencmd if vcgencmd exists (default: /sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq)",
+        help="CPU core frequency file. Must be used in conjunction with --disable-vcgencmd if vcgencmd exists (default: /sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq)",
     )
     parser.add_argument(
         "--disable-vcgencmd",
@@ -155,7 +155,7 @@ def plot(argv=None):
     data = [yaml.load(f, Loader=yaml.SafeLoader) for f in args.infiles]
 
     # sort the data such that the data series with the lowest terminal
-    # temperature is plotted last (and appears int he legend last)
+    # temperature is plotted last (and appears in the legend last)
     terminal_temps = [d["temperature"][-1] for d in data]
     order = [i[0] for i in sorted(enumerate(terminal_temps), key=lambda x: x[1])]
     # actually plot it
@@ -183,7 +183,7 @@ def plot(argv=None):
                     color="C1",
                 )
         except KeyError():
-            print("Source data does not contain cpu frequency data.")
+            print("Source data does not contain CPU frequency data.")
 
     if args.outfile is not None:
         plt.savefig(args.outfile, transparent=True, bbox_inches="tight", dpi=args.dpi)
@@ -229,7 +229,7 @@ def _get_parser_plot():
     parser.add_argument(
         "-f",
         "--frequency",
-        help="plot cpu core frequency (single input files only)",
+        help="plot CPU core frequency (single input files only)",
         action="store_true",
     )
     return parser
