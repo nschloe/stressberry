@@ -36,7 +36,6 @@ jobs:
     - name: Test with pytest
       run: |
         pip install pytest pytest-cov
-        pip install -r test_requirements.txt
-        cd test/ && MPLBACKEND=Agg pytest --cov quadpy
+        cd test/ && MPLBACKEND=Agg pytest --cov stressberry
     - name: Submit to codecov
       run: bash <(curl -s https://codecov.io/bash)
