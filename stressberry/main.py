@@ -70,22 +70,15 @@ def vcgencmd_avaialble():
         return False
 
 
-def cpu_core_count():
-    """Returns the number of CPU cores
-    """
-    count = cpu_count()
-    return count
-
-
 def test(stress_duration, idle_duration, cores):
     """Run stress test for specified duration with specified idle times
        at the start and end of the test.
     """
     if cores is None:
-        cores = cpu_core_count()
+        cores = cpu_count()
 
     print(
-        "Preparing to stress: [{}] CPU Cores for [{}] seconds".format(
+        "Preparing to stress [{}] CPU Cores for [{}] seconds".format(
             cores, stress_duration
         )
     )
