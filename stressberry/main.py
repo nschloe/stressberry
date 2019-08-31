@@ -36,13 +36,6 @@ def measure_temp(filename="/sys/class/thermal/thermal_zone0/temp"):
     return temp
 
 
-def cpu_core_count():
-    """Returns the number of CPU cores
-    """
-    count = cpu_count()
-    return count
-
-
 def test(duration, cores):
     """Run stress test with 25% of test duration for idle before and after the stres
     """
@@ -50,7 +43,7 @@ def test(duration, cores):
     idle_duration = 0.25 * duration
 
     if cores is None:
-        cores = cpu_core_count()
+        cores = cpu_count()
 
     print("Preparing to stress: [{}] CPU Cores for [{}] seconds".format(cores, stress_duration))
     print("Idling for {} seconds...".format(idle_duration))
