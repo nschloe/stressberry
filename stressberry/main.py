@@ -1,5 +1,6 @@
 import subprocess
 import time as tme
+from os import cpu_count
 
 
 def stress_cpu(num_cpus, time):
@@ -35,10 +36,25 @@ def measure_temp(filename="/sys/class/thermal/thermal_zone0/temp"):
     return temp
 
 
-def test(duration):
-    print("Idling...")
-    tme.sleep(0.25 * duration)
-    stress_cpu(4, time=0.5 * duration)
-    print("Idling...")
-    tme.sleep(0.25 * duration)
+def test(duration, cores):
+    """Run stress test with 25% of test duration for idle before and after the stres
+    """
+    stress_duration = 0.5 * duration
+    idle_duration = 0.25 * duration
+
+    if cores is None:
+        cores = cpu_count()
+
+    print(
+        "Preparing to stress [{}] CPU Cores for [{}] seconds".format(
+            cores, stress_duration
+        )
+    )
+    print("Idling for {} seconds...".format(idle_duration))
+    tme.sleep(idle_duration)
+
+    stress_cpu(num_cpus=cores, time=stress_duration)
+
+    print("Idling for {} seconds...".format(idle_duration))
+    tme.sleep(idle_duration)
     return

@@ -53,6 +53,13 @@ def _get_parser_run():
         default=600,
         help="test duration in seconds (default: 600)",
     )
+    parser.add_argument(
+        "-c",
+        "--cores",
+        type=int,
+        default=None,
+        help="number of cpu cores to stress (default: all)",
+    )
     parser.add_argument("outfile", type=argparse.FileType("w"), help="output data file")
     return parser
 
@@ -66,7 +73,7 @@ def run(argv=None):
     cooldown(filename=args.temperature_file)
 
     # Start the stress test in another thread
-    t = threading.Thread(target=lambda: test(args.duration), args=())
+    t = threading.Thread(target=lambda: test(args.duration, args.cores), args=())
     t.start()
 
     times = []
