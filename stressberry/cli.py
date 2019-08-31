@@ -67,6 +67,13 @@ def _get_parser_run():
         default=None,
         help="number of cpu cores to stress (default: all)",
     )
+    parser.add_argument(
+        "-c",
+        "--cores",
+        type=int,
+        default=None,
+        help="number of cpu cores to stress (default: all)",
+    )
     parser.add_argument("outfile", type=argparse.FileType("w"), help="output data file")
     return parser
 
@@ -81,8 +88,7 @@ def run(argv=None):
 
     # Start the stress test in another thread
     t = threading.Thread(
-        target=lambda: test(args.duration, args.idle, args.cores),
-        args=()
+        target=lambda: test(args.duration, args.idle, args.cores), args=()
     )
     t.start()
 
