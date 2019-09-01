@@ -20,13 +20,11 @@ def cooldown(interval=60, filename="/sys/class/thermal/thermal_zone0/temp"):
         print(
             "Current temperature: {}°C - Previous temperature: {}°C".format(
                 tmp, prev_tmp
-            ),
-            end="\r",
+            )
         )
         if abs(tmp - prev_tmp) < 0.2:
             break
         prev_tmp = tmp
-        print("")  # Ensure next message starts on a new line.
     return tmp
 
 
@@ -34,7 +32,7 @@ def measure_temp(filename="/sys/class/thermal/thermal_zone0/temp", use_vcgencmd=
     """Returns the core temperature in Celsius.
     """
     if use_vcgencmd:
-        # Usign vcgencmd is specific to the raspberry pi
+        # Using vcgencmd is specific to the raspberry pi
         out = subprocess.check_output(["vcgencmd", "measure_temp"]).decode("utf-8")
         temp = float(out.replace("temp=", "").replace("'C", ""))
     else:
@@ -61,7 +59,7 @@ def measure_core_frequency(
 
 
 def vcgencmd_avaialble():
-    """Returns true if vcgencmd is runable, false otherwise
+    """Returns true if vcgencmd is runnable, false otherwise
     """
     try:
         subprocess.call(["vcgencmd"])
