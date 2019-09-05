@@ -159,21 +159,31 @@ def plot(argv=None):
     terminal_temps = [d["temperature"][-1] for d in data]
     order = [i[0] for i in sorted(enumerate(terminal_temps), key=lambda x: x[1])]
     # actually plot it
+    fig = plt.figure()
+    ax1 = fig.add_subplot()
     for k in order[::-1]:
-        plt.plot(data[k]["time"], data[k]["temperature"], label=data[k]["name"])
+        ax1.plot(
+            data[k]["time"],
+            data[k]["temperature"],
+            label=data[k]["name"],
+            lw=args.line_width,
+        )
 
-    plt.grid()
-    plt.legend(loc="upper left", bbox_to_anchor=(1.03, 1.0), borderaxespad=0)
-    plt.xlabel("time (s)")
-    plt.ylabel("temperature (°C)")
-    plt.xlim([data[-1]["time"][0], data[-1]["time"][-1]])
+    ax1.grid()
+    if not args.hide_legend:
+        ax1.legend(loc="upper left", bbox_to_anchor=(1.03, 1.0), borderaxespad=0)
+    ax1.set_xlabel("time (s)")
+    ax1.set_ylabel("temperature (°C)")
+    ax1.set_xlim([data[-1]["time"][0], data[-1]["time"][-1]])
     if args.temp_lims:
-        plt.ylim(*args.temp_lims)
+        ax1.set_ylim(*args.temp_lims)
 
     # Only plot frequencies when using a single input file
     if len(data) == 1 and args.frequency:
         ax2 = plt.twinx()
         ax2.set_ylabel("core frequency (MHz)")
+        if args.freq_lims:
+            ax2.set_ylim(*args.freq_lims)
         try:
             for k in order[::-1]:
                 ax2.plot(
@@ -181,12 +191,23 @@ def plot(argv=None):
                     data[k]["cpu frequency"],
                     label=data[k]["name"],
                     color="C1",
+                    alpha=0.9,
+                    lw=args.line_width,
                 )
+            ax1.set_zorder(ax2.get_zorder() + 1)  # put ax1 plot in front of ax2
+            ax1.patch.set_visible(False)  # hide the 'canvas'
         except KeyError():
             print("Source data does not contain CPU frequency data.")
 
     if args.outfile is not None:
-        plt.savefig(args.outfile, transparent=True, bbox_inches="tight", dpi=args.dpi)
+        if args.not_transparent:
+            plt.savefig(
+                args.outfile, transparent=False, bbox_inches="tight", dpi=args.dpi
+            )
+        else:
+            plt.savefig(
+                args.outfile, transparent=True, bbox_inches="tight", dpi=args.dpi
+            )
     else:
         plt.show()
     return
@@ -231,5 +252,20 @@ def _get_parser_plot():
         "--frequency",
         help="plot CPU core frequency (single input files only)",
         action="store_true",
+    )
+    parser.add_argument(
+        "-l",
+        "--freq-lims",
+        type=float,
+        nargs=2,
+        default=None,
+        help="limits for the frequency scale (default: data limits)",
+    )
+    parser.add_argument("--hide-legend", help="do not draw legend", action="store_true")
+    parser.add_argument(
+        "--not-transparent", help="do not draw legend", action="store_true"
+    )
+    parser.add_argument(
+        "-lw", "--line-width", type=float, default=None, help="line width"
     )
     return parser
