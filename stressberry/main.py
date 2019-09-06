@@ -10,7 +10,7 @@ def stress_cpu(num_cpus, time):
     return
 
 
-def cooldown(interval=60, filename="/sys/class/thermal/thermal_zone0/temp"):
+def cooldown(interval=60, filename=None):
     """Lets the CPU cool down until the temperature does not change anymore.
     """
     prev_tmp = measure_temp(filename=filename)
@@ -18,7 +18,7 @@ def cooldown(interval=60, filename="/sys/class/thermal/thermal_zone0/temp"):
         tme.sleep(interval)
         tmp = measure_temp(filename=filename)
         print(
-            "Current temperature: {}°C - Previous temperature: {}°C".format(
+            "Current temperature: {:4.1f}°C - Previous temperature: {:4.1f}°C".format(
                 tmp, prev_tmp
             )
         )
@@ -28,44 +28,31 @@ def cooldown(interval=60, filename="/sys/class/thermal/thermal_zone0/temp"):
     return tmp
 
 
-def measure_temp(filename="/sys/class/thermal/thermal_zone0/temp", use_vcgencmd=False):
+def measure_temp(filename=None):
     """Returns the core temperature in Celsius.
     """
-    if use_vcgencmd:
+    if filename is not None:
+        with open(filename, "r") as f:
+            temp = float(f.read()) / 1000
+    else:
         # Using vcgencmd is specific to the raspberry pi
         out = subprocess.check_output(["vcgencmd", "measure_temp"]).decode("utf-8")
         temp = float(out.replace("temp=", "").replace("'C", ""))
-    else:
-        with open(filename, "r") as f:
-            temp = float(f.read()) / 1000
     return temp
 
 
-def measure_core_frequency(
-    filename="/sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq", use_vcgencmd=False
-):
+def measure_core_frequency(filename=None):
     """Returns the CPU frequency in MHz
     """
-    if use_vcgencmd:
-        # Only vcgencmd measure_clock arm is accurate on Raspberry Pi.
-        # Per: https://www.raspberrypi.org/forums/viewtopic.php?f=63&t=219358&start=25
-        # TODO: May also need to look at: vcgencmd get_throttled
-        out = subprocess.check_output(["vcgencmd", "measure_clock arm"]).decode("utf-8")
-        frequency = int(int(out.split("=")[1]) / 1000000)
-    else:
+    if filename is not None:
         with open(filename, "r") as f:
             frequency = int(f.read()) / 1000
+    else:
+        # Only vcgencmd measure_clock arm is accurate on Raspberry Pi.
+        # Per: https://www.raspberrypi.org/forums/viewtopic.php?f=63&t=219358&start=25
+        out = subprocess.check_output(["vcgencmd", "measure_clock arm"]).decode("utf-8")
+        frequency = int(int(out.split("=")[1]) / 1000000)
     return frequency
-
-
-def vcgencmd_avaialble():
-    """Returns true if vcgencmd is runnable, false otherwise
-    """
-    try:
-        subprocess.call(["vcgencmd"])
-        return True
-    except OSError:
-        return False
 
 
 def test(stress_duration, idle_duration, cores):

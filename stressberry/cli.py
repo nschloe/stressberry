@@ -8,13 +8,7 @@ import matplotlib.pyplot as plt
 import yaml
 
 from .__about__ import __copyright__, __version__
-from .main import (
-    cooldown,
-    measure_temp,
-    measure_core_frequency,
-    test,
-    vcgencmd_avaialble,
-)
+from .main import cooldown, measure_temp, measure_core_frequency, test
 
 
 def _get_version_text():
@@ -46,11 +40,7 @@ def _get_parser_run():
         help="name the data set (default: 'stressberry data')",
     )
     parser.add_argument(
-        "-t",
-        "--temperature-file",
-        type=str,
-        default="/sys/class/thermal/thermal_zone0/temp",
-        help="temperature file. Must be used in conjunction with --disable-vcgencmd if vcgencmd exists (default: /sys/class/thermal/thermal_zone0/temp)",
+        "-t", "--temperature-file", type=str, default=None, help="temperature file."
     )
     parser.add_argument(
         "-d",
@@ -74,19 +64,11 @@ def _get_parser_run():
         help="number of CPU cores to stress (default: all)",
     )
     parser.add_argument(
-        "-f", "--frequency", help="measure CPU core frequency", action="store_true"
-    )
-    parser.add_argument(
-        "-ff",
+        "-f",
         "--frequency-file",
         type=str,
-        default="/sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq",
-        help="CPU core frequency file. Must be used in conjunction with --disable-vcgencmd if vcgencmd exists (default: /sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq)",
-    )
-    parser.add_argument(
-        "--disable-vcgencmd",
-        help="Do not use Raspberry Pi vcgencmd to collect measurements, even if available. Use files instead.",
-        action="store_true",
+        default=None,
+        help="CPU core frequency file.",
     )
     parser.add_argument("outfile", type=argparse.FileType("w"), help="output data file")
     return parser
@@ -95,8 +77,6 @@ def _get_parser_run():
 def run(argv=None):
     parser = _get_parser_run()
     args = parser.parse_args(argv)
-
-    use_vcgencmd = vcgencmd_avaialble() and not args.disable_vcgencmd
 
     # Cool down first
     print("Awaiting stable baseline temperature...")
@@ -113,16 +93,13 @@ def run(argv=None):
     freqs = []
     while t.is_alive():
         times.append(time.time())
-        temps.append(measure_temp(args.temperature_file, use_vcgencmd))
-        if args.frequency:
-            freqs.append(measure_core_frequency(args.frequency_file, use_vcgencmd))
-            print(
-                "Current temperature: {}°C. Frequency: {}MHz".format(
-                    temps[-1], freqs[-1]
-                )
+        temps.append(measure_temp(args.temperature_file))
+        freqs.append(measure_core_frequency(args.frequency_file))
+        print(
+            "Current temperature: {:4.1f}°C - Frequency: {:4d}MHz".format(
+                temps[-1], freqs[-1]
             )
-        else:
-            print("Current temperature: {}°C".format(temps[-1]))
+        )
         # Choose the sample interval such that we have a respectable number of
         # data points
         t.join(2.0)
@@ -200,14 +177,12 @@ def plot(argv=None):
             print("Source data does not contain CPU frequency data.")
 
     if args.outfile is not None:
-        if args.not_transparent:
-            plt.savefig(
-                args.outfile, transparent=False, bbox_inches="tight", dpi=args.dpi
-            )
-        else:
-            plt.savefig(
-                args.outfile, transparent=True, bbox_inches="tight", dpi=args.dpi
-            )
+        plt.savefig(
+            args.outfile,
+            transparent=args.transparent,
+            bbox_inches="tight",
+            dpi=args.dpi,
+        )
     else:
         plt.show()
     return
@@ -263,7 +238,10 @@ def _get_parser_plot():
     )
     parser.add_argument("--hide-legend", help="do not draw legend", action="store_true")
     parser.add_argument(
-        "--not-transparent", help="do not draw legend", action="store_true"
+        "--transparent",
+        help="replace transparent background opaque",
+        action="store_false",
+        default=True,
     )
     parser.add_argument(
         "-lw", "--line-width", type=float, default=None, help="line width"
