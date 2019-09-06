@@ -13,7 +13,9 @@ def test_run():
         f.write("1500000")
 
     outfile = tempfile.NamedTemporaryFile().name
-    stressberry.cli.run([outfile, "-t", temperature_file, "-f", frequency_file, "-d", "12", "-i", "3"])
+    stressberry.cli.run(
+        [outfile, "-t", temperature_file, "-f", frequency_file, "-d", "12", "-i", "3"]
+    )
 
     stressberry.cli.plot([outfile])
     return
