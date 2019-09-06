@@ -96,7 +96,7 @@ def run(argv=None):
         temps.append(measure_temp(args.temperature_file))
         freqs.append(measure_core_frequency(args.frequency_file))
         print(
-            "Current temperature: {:4.1f}°C - Frequency: {:4d}MHz".format(
+            "Current temperature: {:4.1f}°C - Frequency: {:4.0f}MHz".format(
                 temps[-1], freqs[-1]
             )
         )

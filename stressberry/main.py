@@ -46,12 +46,12 @@ def measure_core_frequency(filename=None):
     """
     if filename is not None:
         with open(filename, "r") as f:
-            frequency = int(f.read()) / 1000
+            frequency = float(f.read()) / 1000
     else:
         # Only vcgencmd measure_clock arm is accurate on Raspberry Pi.
         # Per: https://www.raspberrypi.org/forums/viewtopic.php?f=63&t=219358&start=25
         out = subprocess.check_output(["vcgencmd", "measure_clock arm"]).decode("utf-8")
-        frequency = int(int(out.split("=")[1]) / 1000000)
+        frequency = float(out.split("=")[1]) / 1000000
     return frequency
 
 
