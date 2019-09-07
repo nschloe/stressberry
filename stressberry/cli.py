@@ -8,13 +8,7 @@ import matplotlib.pyplot as plt
 import yaml
 
 from .__about__ import __copyright__, __version__
-from .main import (
-    cooldown,
-    measure_temp,
-    measure_core_frequency,
-    test,
-    vcgencmd_avaialble,
-)
+from .main import cooldown, measure_temp, measure_core_frequency, test
 
 
 def _get_version_text():
@@ -49,8 +43,8 @@ def _get_parser_run():
         "-t",
         "--temperature-file",
         type=str,
-        default="/sys/class/thermal/thermal_zone0/temp",
-        help="temperature file. Must be used in conjunction with --disable-vcgencmd if vcgencmd exists (default: /sys/class/thermal/thermal_zone0/temp)",
+        default=None,
+        help="temperature file e.g /sys/class/thermal/thermal_zone0/temp (default: vcgencmd)",
     )
     parser.add_argument(
         "-d",
@@ -67,6 +61,12 @@ def _get_parser_run():
         help="idle time in seconds at start and end of stress test (default: 150)",
     )
     parser.add_argument(
+        "--cooldown",
+        type=int,
+        default=60,
+        help="poll interval seconds to check for stable temperature (default: 60)",
+    )
+    parser.add_argument(
         "-c",
         "--cores",
         type=int,
@@ -74,19 +74,11 @@ def _get_parser_run():
         help="number of CPU cores to stress (default: all)",
     )
     parser.add_argument(
-        "-f", "--frequency", help="measure CPU core frequency", action="store_true"
-    )
-    parser.add_argument(
-        "-ff",
+        "-f",
         "--frequency-file",
         type=str,
-        default="/sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq",
-        help="CPU core frequency file. Must be used in conjunction with --disable-vcgencmd if vcgencmd exists (default: /sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq)",
-    )
-    parser.add_argument(
-        "--disable-vcgencmd",
-        help="Do not use Raspberry Pi vcgencmd to collect measurements, even if available. Use files instead.",
-        action="store_true",
+        default=None,
+        help="CPU core frequency file e.g. /sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq (default: vcgencmd)",
     )
     parser.add_argument("outfile", type=argparse.FileType("w"), help="output data file")
     return parser
@@ -96,11 +88,9 @@ def run(argv=None):
     parser = _get_parser_run()
     args = parser.parse_args(argv)
 
-    use_vcgencmd = vcgencmd_avaialble() and not args.disable_vcgencmd
-
     # Cool down first
     print("Awaiting stable baseline temperature...")
-    cooldown(filename=args.temperature_file)
+    cooldown(interval=args.cooldown, filename=args.temperature_file)
 
     # Start the stress test in another thread
     t = threading.Thread(
@@ -113,16 +103,13 @@ def run(argv=None):
     freqs = []
     while t.is_alive():
         times.append(time.time())
-        temps.append(measure_temp(args.temperature_file, use_vcgencmd))
-        if args.frequency:
-            freqs.append(measure_core_frequency(args.frequency_file, use_vcgencmd))
-            print(
-                "Current temperature: {}°C. Frequency: {}MHz".format(
-                    temps[-1], freqs[-1]
-                )
+        temps.append(measure_temp(args.temperature_file))
+        freqs.append(measure_core_frequency(args.frequency_file))
+        print(
+            "Current temperature: {:4.1f}°C - Frequency: {:4.0f}MHz".format(
+                temps[-1], freqs[-1]
             )
-        else:
-            print("Current temperature: {}°C".format(temps[-1]))
+        )
         # Choose the sample interval such that we have a respectable number of
         # data points
         t.join(2.0)
@@ -200,14 +187,12 @@ def plot(argv=None):
             print("Source data does not contain CPU frequency data.")
 
     if args.outfile is not None:
-        if args.not_transparent:
-            plt.savefig(
-                args.outfile, transparent=False, bbox_inches="tight", dpi=args.dpi
-            )
-        else:
-            plt.savefig(
-                args.outfile, transparent=True, bbox_inches="tight", dpi=args.dpi
-            )
+        plt.savefig(
+            args.outfile,
+            transparent=args.transparent,
+            bbox_inches="tight",
+            dpi=args.dpi,
+        )
     else:
         plt.show()
     return
@@ -263,7 +248,11 @@ def _get_parser_plot():
     )
     parser.add_argument("--hide-legend", help="do not draw legend", action="store_true")
     parser.add_argument(
-        "--not-transparent", help="do not draw legend", action="store_true"
+        "--not-transparent",
+        dest="transparent",
+        help="do not make images transparent",
+        action="store_false",
+        default=True,
     )
     parser.add_argument(
         "-lw", "--line-width", type=float, default=None, help="line width"
