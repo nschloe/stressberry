@@ -12,17 +12,18 @@ def test_run():
     with open(frequency_file, "w") as f:
         f.write("1500000")
 
-    outfile1 = tempfile.NamedTemporaryFile().name
+    # TODO: Need to mock call to subprocess.check_output
+    # outfile1 = tempfile.NamedTemporaryFile().name
+    # stressberry.cli.run(
+    #     [outfile1, "-d", "12", "-i", "2", "--cooldown", "1"]
+    # )
+
+    outfile = tempfile.NamedTemporaryFile().name
     stressberry.cli.run(
-        [outfile1, "-d", "12", "-i", "2", "--cooldown", "1"]
-    )
-    
-    outfile2 = tempfile.NamedTemporaryFile().name
-    stressberry.cli.run(
-        [outfile2, "-t", temperature_file, "-f", frequency_file, "-d", "12", "-i", "2", "--cooldown", "1"]
+        [outfile, "-t", temperature_file, "-f", frequency_file, "-d", "12", "-i", "2", "--cooldown", "1"]
     )
 
-    stressberry.cli.plot([outfile1, "-f", "--temp-lims", "20", "90", "--freq-lims", "500", "2000"])
+    stressberry.cli.plot([outfile, "-f", "--temp-lims", "20", "90", "--freq-lims", "500", "2000"])
     plotoutfile = tempfile.NamedTemporaryFile().name
-    stressberry.cli.plot([outfile2, "-f", "--temp-lims", "20", "90", "--freq-lims", "500", "2000", "-o", plotoutfile])
+    stressberry.cli.plot([outfile, "-f", "--temp-lims", "20", "90", "--freq-lims", "500", "2000", "-o", plotoutfile])
     return
