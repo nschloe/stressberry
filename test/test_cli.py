@@ -17,5 +17,5 @@ def test_run():
         [outfile, "-t", temperature_file, "-f", frequency_file, "-d", "12", "-i", "3"]
     )
 
-    stressberry.cli.plot([outfile])
+    stressberry.cli.plot([outfile, "-f"])
     return
