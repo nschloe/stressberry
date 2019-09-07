@@ -244,8 +244,9 @@ def _get_parser_plot():
     )
     parser.add_argument("--hide-legend", help="do not draw legend", action="store_true")
     parser.add_argument(
-        "--transparent",
-        help="replace transparent background opaque",
+        "--not-transparent",
+        dest="transparent",
+        help="do not make images transparent",
         action="store_false",
         default=True,
     )
