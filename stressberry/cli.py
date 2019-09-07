@@ -57,6 +57,12 @@ def _get_parser_run():
         help="idle time in seconds at start and end of stress test (default: 150)",
     )
     parser.add_argument(
+        "--cooldown",
+        type=int,
+        default=60,
+        help="poll interval seconds to check for stable temperature (default: 60)",
+    )
+    parser.add_argument(
         "-c",
         "--cores",
         type=int,
@@ -80,7 +86,7 @@ def run(argv=None):
 
     # Cool down first
     print("Awaiting stable baseline temperature...")
-    cooldown(filename=args.temperature_file)
+    cooldown(interval=args.cooldown, filename=args.temperature_file)
 
     # Start the stress test in another thread
     t = threading.Thread(
