@@ -40,7 +40,11 @@ def _get_parser_run():
         help="name the data set (default: 'stressberry data')",
     )
     parser.add_argument(
-        "-t", "--temperature-file", type=str, default=None, help="temperature file."
+        "-t",
+        "--temperature-file",
+        type=str,
+        default=None,
+        help="temperature file e.g /sys/class/thermal/thermal_zone0/temp (default: vcgencmd)",
     )
     parser.add_argument(
         "-d",
@@ -74,7 +78,7 @@ def _get_parser_run():
         "--frequency-file",
         type=str,
         default=None,
-        help="CPU core frequency file.",
+        help="CPU core frequency file e.g. /sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq (default: vcgencmd)",
     )
     parser.add_argument("outfile", type=argparse.FileType("w"), help="output data file")
     return parser
