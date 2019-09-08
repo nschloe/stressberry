@@ -178,7 +178,6 @@ def plot(argv=None):
     else:
         plot_temperature = "temperature"
         plot_yaxis_label = "temperature °C"
-        
 
     # sort the data such that the data series with the lowest terminal
     # temperature is plotted last (and appears in the legend last)
@@ -303,6 +302,6 @@ def _get_parser_plot():
         "--delta-t",
         action="store_true",
         default=False,
-        help="Use Delta-T (core - ambient) temperature instead of CPU core temperature"
+        help="Use Delta-T (core - ambient) temperature instead of CPU core temperature",
     )
     return parser
