@@ -11,7 +11,7 @@ IDLE=300 # 5mins
 DURATION=3600 # 1hour
 WAIT=900 # 15mins
 # Ambient Temperature Sensor
-SENSOR=2303
+SENSOR=2302
 SENSOR_PIN=16
 
 # Convert to mins for file naming
