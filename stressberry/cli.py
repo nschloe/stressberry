@@ -180,14 +180,13 @@ def plot(argv=None):
     ax1 = fig.add_subplot()
     for k in order[::-1]:
         if args.delta_t:
-            temperature_data = numpy.subtract(data[k]["temperature"], data[k]["ambient"])
-        else: 
+            temperature_data = numpy.subtract(
+                data[k]["temperature"], data[k]["ambient"]
+            )
+        else:
             temperature_data = data[k]["temperature"]
         ax1.plot(
-            data[k]["time"],
-            temperature_data,
-            label=data[k]["name"],
-            lw=args.line_width,
+            data[k]["time"], temperature_data, label=data[k]["name"], lw=args.line_width
         )
 
     ax1.grid()
