@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#Test name from CMD line args
+# Test name from CMD line args
 NAME=$1
 
 # Stress Test Config
@@ -28,7 +28,7 @@ for cores in {1..4}
     NOW=$(date +"%x %r")
     echo "$NOW : Name: \"$NAME\" : Idle: $IDLE Duration: $DURATION Cores: $cores Outfile: $OUTFILE"
     $STRESSBERRY -n "$NAME" -a $SENSOR $SENSOR_PIN -d $DURATION -i $IDLE -c $cores $OUTDIR$OUTFILE
-    echo "Waiting betweeen tests for: $WAIT_MINS minutes..."
+    echo "Waiting between tests for: $WAIT_MINS minutes..."
     sleep $WAIT
 done
 echo "Test Complete: "$(date +"%x %r")
