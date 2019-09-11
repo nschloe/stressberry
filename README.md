@@ -18,11 +18,10 @@ plots which can easily be compared.
 ### Raspberry Pi 4B
 <img src="https://nschloe.github.io/stressberry/4b.svg" width="70%">
 
-#### With fans
-
-<img src="https://nschloe.github.io/stressberry/rpi4-fans.jpg" width="40%">
-
-Thanks to @flyingferret for the measurements!
+<img src="https://nschloe.github.io/stressberry/rpi4-fans.jpg" width="70%"> |
+<img src="https://nschloe.github.io/stressberry/kksb.jpg" width="70%">
+:--------------------------------------:|:----------------------:|
+@flyingferret, custom case with fans    |  @JohBod, [KKSB case](https://kksb-cases.com/products/kksb-raspberry-pi-4-case-aluminium)    |
 
 
 ### Raspberry Pi 3B+
