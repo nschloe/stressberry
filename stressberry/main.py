@@ -61,7 +61,7 @@ def measure_ambient_temperature(sensor_type="2302", pin="23"):
     try:
         import Adafruit_DHT  # Late import so that library is only needed if requested
     except ImportError as e:
-        print("Install adafruit_dht python module: sudo pip install Adafruit_DHT")
+        print("Install adafruit_dht python module: pip --user install Adafruit_DHT")
         raise e
 
     sensor_map = {

@@ -5,6 +5,7 @@ import threading
 import time
 
 import matplotlib.pyplot as plt
+import numpy
 import yaml
 
 from .__about__ import __copyright__, __version__
@@ -116,21 +117,28 @@ def run(argv=None):
     temps = []
     freqs = []
     ambient = []
-    delta_t = []
     while t.is_alive():
         times.append(time.time())
         temps.append(measure_temp(args.temperature_file))
         freqs.append(measure_core_frequency(args.frequency_file))
         if args.ambient:
-            ambient.append(
-                measure_ambient_temperature(
-                    sensor_type=args.ambient[0], pin=args.ambient[1]
-                )
+            ambient_temperature = measure_ambient_temperature(
+                sensor_type=args.ambient[0], pin=args.ambient[1]
             )
-            delta_t.append(temps[-1] - ambient[-1])
+            if ambient_temperature is None:
+                # Reading the sensor can return None, we need to handle this to avoid crashing
+                # use last known value if available or worst case set to zero
+                ambient_temperature = next(
+                    (temp[1] for temp in reversed(ambient) if temp[1] is not None), 0
+                )
+                print(
+                    "WARN - Could not read ambient temperature, using last good value"
+                )
+            ambient.append(ambient_temperature)
+            delta_t = temps[-1] - ambient[-1]
             print(
                 "Temperature (current | ambient | ΔT): {:4.1f}°C | {:4.1f}°C | {:4.1f}°C - Frequency: {:4.0f}MHz".format(
-                    temps[-1], ambient[-1], delta_t[-1], freqs[-1]
+                    temps[-1], ambient[-1], delta_t, freqs[-1]
                 )
             )
         else:
@@ -159,7 +167,6 @@ def run(argv=None):
             "temperature": temps,
             "cpu frequency": freqs,
             "ambient": ambient,
-            "delta_t": delta_t,
         },
         args.outfile,
     )
@@ -172,34 +179,31 @@ def plot(argv=None):
 
     data = [yaml.load(f, Loader=yaml.SafeLoader) for f in args.infiles]
 
-    if args.delta_t:
-        plot_temperature = "delta_t"
-        plot_yaxis_label = "Δ temperature °C (over ambient)"
-    else:
-        plot_temperature = "temperature"
-        plot_yaxis_label = "temperature °C"
-
     # sort the data such that the data series with the lowest terminal
     # temperature is plotted last (and appears in the legend last)
-    try:
-        terminal_temps = [d[plot_temperature][-1] for d in data]
-    except KeyError:
-        print("Source data does not data for: {}".format(plot_temperature))
+    terminal_temps = [d["temperature"][-1] for d in data]
     order = [i[0] for i in sorted(enumerate(terminal_temps), key=lambda x: x[1])]
     # actually plot it
     fig = plt.figure()
     ax1 = fig.add_subplot()
     for k in order[::-1]:
+        if args.delta_t:
+            temperature_data = numpy.subtract(
+                data[k]["temperature"], data[k]["ambient"]
+            )
+        else:
+            temperature_data = data[k]["temperature"]
         ax1.plot(
-            data[k]["time"],
-            data[k][plot_temperature],
-            label=data[k]["name"],
-            lw=args.line_width,
+            data[k]["time"], temperature_data, label=data[k]["name"], lw=args.line_width
         )
 
     ax1.grid()
     if not args.hide_legend:
         ax1.legend(loc="upper left", bbox_to_anchor=(1.03, 1.0), borderaxespad=0)
+    if args.delta_t:
+        plot_yaxis_label = "Δ temperature °C (over ambient)"
+    else:
+        plot_yaxis_label = "temperature °C"
     ax1.set_xlabel("time (s)")
     ax1.set_ylabel(plot_yaxis_label)
     ax1.set_xlim([data[-1]["time"][0], data[-1]["time"][-1]])
