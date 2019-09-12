@@ -126,13 +126,18 @@ def run(argv=None):
                 sensor_type=args.ambient[0], pin=args.ambient[1]
             )
             if ambient_temperature is None:
-                # Reading the sensor can return None, we need to handle this to avoid crashing
-                # use last known value if available or worst case set to zero
+                # Reading the sensor can return None if it times out.
+                # If never had a good result, probably configuration error
+                # Else use last known value if available or worst case set to zero
+                if not ambient:
+                    message = "Could not read ambient temperature sensor {} on pin {}".format(
+                        args.ambient[0], args.ambient[1]
+                    )
+                else:
+                    message = "WARN - Could not read ambient temperature, using last good value"
+                print(message)
                 ambient_temperature = next(
-                    (temp[1] for temp in reversed(ambient) if temp[1] is not None), 0
-                )
-                print(
-                    "WARN - Could not read ambient temperature, using last good value"
+                    (temp for temp in reversed(ambient) if temp is not None), 0
                 )
             ambient.append(ambient_temperature)
             delta_t = temps[-1] - ambient[-1]
