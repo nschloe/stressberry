@@ -17,5 +17,5 @@ for f in *.files # contains list of files
      do
         FILELIST="$FILELIST $line"
     done < "$f"
-    MPLBACKEND=Agg $PLOT $FILELIST -d $DPI -t $TEMP_MIN $TEMP_MAX -o "${f%.out}$FILE_FORMAT" --not-transparent --line-width 0.2
+    MPLBACKEND=Agg $PLOT $FILELIST -d $DPI -t $TEMP_MIN $TEMP_MAX -o "${f%.out}$FILE_FORMAT" --not-transparent --line-width $LINE_WIDTH --delta-t
 done
