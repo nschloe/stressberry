@@ -13,5 +13,5 @@ FILE_FORMAT=.png
 for f in *.out
   do
      echo "$f"
-     MPLBACKEND=Agg $PLOT "$f" -f -d $DPI -t $TEMP_MIN $TEMP_MAX -l $FREQ_MIN $FREQ_MAX -o "${f%.out}$FILE_FORMAT" --hide-legend --not-transparent --line-width $LINE_WIDTH
+     MPLBACKEND=Agg $PLOT "$f" -f -d $DPI -t $TEMP_MIN $TEMP_MAX -l $FREQ_MIN $FREQ_MAX -o "${f%.out}$FILE_FORMAT" --hide-legend --not-transparent --line-width $LINE_WIDTH --delta-t
 done
