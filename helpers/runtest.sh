@@ -28,8 +28,10 @@ for cores in {1..4}
     NOW=$(date +"%x %r")
     echo "$NOW : Name: \"$NAME\" : Idle: $IDLE Duration: $DURATION Cores: $cores Outfile: $OUTFILE"
     $STRESSBERRY -n "$NAME" -a $SENSOR $SENSOR_PIN -d $DURATION -i $IDLE -c $cores $OUTDIR$OUTFILE
-    if cores < 4  # Last in loop, no point hanging around
+    if [ $cores -gt 4 ]  # Last in loop, no point hanging around
+    then
       echo "Waiting between tests for: $WAIT_MINS minutes..."
       sleep $WAIT
+    fi
 done
 echo "Test Complete: "$(date +"%x %r")
