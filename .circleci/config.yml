@@ -21,7 +21,7 @@ jobs:
       - run: pip3 install -U pytest pytest-cov --user
       - checkout
       # install
-      - run: pip3 install .
+      - run: pip3 install . --user
       # There is no actual test
       - run: cd test/ && MPLBACKEND=Agg pytest --maxfail=1 --cov stressberry
       # submit to codecov
