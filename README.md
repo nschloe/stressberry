@@ -19,9 +19,11 @@ plots which can easily be compared.
 <img src="https://nschloe.github.io/stressberry/4b.svg" width="70%">
 
 <img src="https://nschloe.github.io/stressberry/rpi4-fans.jpg" width="70%"> |
-<img src="https://nschloe.github.io/stressberry/kksb.jpg" width="70%">
+<img src="https://nschloe.github.io/stressberry/kksb.jpg" width="70%"> |
+<img src="https://nschloe.github.io/stressberry/argon-one.jpg" width="70%">
 :--------------------------------------:|:----------------------:|
 @flyingferret, custom case with fans    |  @JohBod, [KKSB case](https://kksb-cases.com/products/kksb-raspberry-pi-4-case-aluminium)    |
+@jholloway, [Argon One case](https://www.argon40.com/argon1/argon-one-pi4.html)
 
 
 ### Raspberry Pi 3B+
