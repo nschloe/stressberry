@@ -3,29 +3,29 @@ version: 2
 jobs:
   lint:
     docker:
-      - image: ubuntu:18.04
+      - image: circleci/python:3
     steps:
       - checkout
-      - run: apt update
-      - run: apt install -y python3-pip
-      - run: pip3 install -U black flake8
+      - run: sudo apt update
+      - run: sudo apt install -y python3-pip
+      - run: pip3 install -U black flake8 --user
       - run: LC_ALL=C.UTF-8 black --check .
       - run: flake8 .
   build:
     working_directory: ~/work
     docker:
-      - image: ubuntu:18.04
+      - image: circleci/python:3
     steps:
-      - run: apt update
-      - run: apt install -y python3-pip stress
-      - run: pip3 install -U pytest pytest-cov
+      - run: sudo apt update
+      - run: sudo apt install -y python3-pip stress
+      - run: pip3 install -U pytest pytest-cov --user
       - checkout
       # install
-      - run: pip3 install .
+      - run: pip3 install . --user
       # There is no actual test
       - run: cd test/ && MPLBACKEND=Agg pytest --maxfail=1 --cov stressberry
       # submit to codecov
-      - run: apt-get install -y curl
+      - run: sudo apt install -y curl
       - run: bash <(curl -s https://codecov.io/bash)
 
 workflows:
