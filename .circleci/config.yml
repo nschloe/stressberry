@@ -6,9 +6,9 @@ jobs:
       - image: circleci/python:3
     steps:
       - checkout
-      - run: apt update
+      - run: sudo apt update
       - run: sudo apt install -y python3-pip
-      - run: pip3 install -U black flake8
+      - run: pip3 install -U black flake8 --user
       - run: LC_ALL=C.UTF-8 black --check .
       - run: flake8 .
   build:
@@ -18,7 +18,7 @@ jobs:
     steps:
       - run: sudo apt update
       - run: sudo apt install -y python3-pip stress
-      - run: pip3 install -U pytest pytest-cov
+      - run: pip3 install -U pytest pytest-cov --user
       - checkout
       # install
       - run: pip3 install .
