@@ -25,7 +25,6 @@ plots which can easily be compared.
 :--------------------------------------:|:----------------------:|:------:|
 custom case with fans  (@flyingferret, [#21](https://github.com/nschloe/stressberry/issues/21))  | [KKSB case](https://kksb-cases.com/products/kksb-raspberry-pi-4-case-aluminium) (@JohBod, [#31](https://github.com/nschloe/stressberry/issues/31)) | [Argon One case](https://www.argon40.com/argon1/argon-one-pi4.html) (@jholloway, [#37](https://github.com/nschloe/stressberry/issues/37))
 <img src="https://nschloe.github.io/stressberry/hex-wrench.png" width="70%"> | |
-:--------------------------------------:|:----------------------:|:------:|
 [hex wrench case](https://www.amazon.ca/Aluminum-Model-Raspberry-Wrench-Enclosure/dp/B07W6FT1DD?th=1) (@patrickpoirier51, [#45](https://github.com/nschloe/stressberry/issues/45)) | |
 
 
