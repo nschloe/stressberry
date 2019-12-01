@@ -5,10 +5,17 @@ import threading
 import time
 
 import matplotlib.pyplot as plt
+import numpy
 import yaml
 
 from .__about__ import __copyright__, __version__
-from .main import cooldown, measure_temp, measure_core_frequency, test
+from .main import (
+    cooldown,
+    measure_temp,
+    measure_core_frequency,
+    measure_ambient_temperature,
+    test,
+)
 
 
 def _get_version_text():
@@ -80,6 +87,14 @@ def _get_parser_run():
         default=None,
         help="CPU core frequency file e.g. /sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq (default: vcgencmd)",
     )
+    parser.add_argument(
+        "-a",
+        "--ambient",
+        type=str,
+        nargs=2,
+        default=None,
+        help="measure ambient temperature. Sensor Type [11|22|2302] <GPIO Number> e.g. 2302 26",
+    )
     parser.add_argument("outfile", type=argparse.FileType("w"), help="output data file")
     return parser
 
@@ -101,15 +116,42 @@ def run(argv=None):
     times = []
     temps = []
     freqs = []
+    ambient = []
     while t.is_alive():
         times.append(time.time())
         temps.append(measure_temp(args.temperature_file))
         freqs.append(measure_core_frequency(args.frequency_file))
-        print(
-            "Current temperature: {:4.1f}°C - Frequency: {:4.0f}MHz".format(
-                temps[-1], freqs[-1]
+        if args.ambient:
+            ambient_temperature = measure_ambient_temperature(
+                sensor_type=args.ambient[0], pin=args.ambient[1]
             )
-        )
+            if ambient_temperature is None:
+                # Reading the sensor can return None if it times out.
+                # If never had a good result, probably configuration error
+                # Else use last known value if available or worst case set to zero
+                if not ambient:
+                    message = "Could not read ambient temperature sensor {} on pin {}".format(
+                        args.ambient[0], args.ambient[1]
+                    )
+                else:
+                    message = "WARN - Could not read ambient temperature, using last good value"
+                print(message)
+                ambient_temperature = next(
+                    (temp for temp in reversed(ambient) if temp is not None), 0
+                )
+            ambient.append(ambient_temperature)
+            delta_t = temps[-1] - ambient[-1]
+            print(
+                "Temperature (current | ambient | ΔT): {:4.1f}°C | {:4.1f}°C | {:4.1f}°C - Frequency: {:4.0f}MHz".format(
+                    temps[-1], ambient[-1], delta_t, freqs[-1]
+                )
+            )
+        else:
+            print(
+                "Current temperature: {:4.1f}°C - Frequency: {:4.0f}MHz".format(
+                    temps[-1], freqs[-1]
+                )
+            )
         # Choose the sample interval such that we have a respectable number of
         # data points
         t.join(2.0)
@@ -129,6 +171,7 @@ def run(argv=None):
             "time": times,
             "temperature": temps,
             "cpu frequency": freqs,
+            "ambient": ambient,
         },
         args.outfile,
     )
@@ -149,18 +192,25 @@ def plot(argv=None):
     fig = plt.figure()
     ax1 = fig.add_subplot()
     for k in order[::-1]:
+        if args.delta_t:
+            temperature_data = numpy.subtract(
+                data[k]["temperature"], data[k]["ambient"]
+            )
+        else:
+            temperature_data = data[k]["temperature"]
         ax1.plot(
-            data[k]["time"],
-            data[k]["temperature"],
-            label=data[k]["name"],
-            lw=args.line_width,
+            data[k]["time"], temperature_data, label=data[k]["name"], lw=args.line_width
         )
 
     ax1.grid()
     if not args.hide_legend:
         ax1.legend(loc="upper left", bbox_to_anchor=(1.03, 1.0), borderaxespad=0)
+    if args.delta_t:
+        plot_yaxis_label = "Δ temperature °C (over ambient)"
+    else:
+        plot_yaxis_label = "temperature °C"
     ax1.set_xlabel("time (s)")
-    ax1.set_ylabel("temperature (°C)")
+    ax1.set_ylabel(plot_yaxis_label)
     ax1.set_xlim([data[-1]["time"][0], data[-1]["time"][-1]])
     if args.temp_lims:
         ax1.set_ylim(*args.temp_lims)
@@ -256,5 +306,11 @@ def _get_parser_plot():
     )
     parser.add_argument(
         "-lw", "--line-width", type=float, default=None, help="line width"
+    )
+    parser.add_argument(
+        "--delta-t",
+        action="store_true",
+        default=False,
+        help="Use Delta-T (core - ambient) temperature instead of CPU core temperature",
     )
     return parser

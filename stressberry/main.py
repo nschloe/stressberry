@@ -55,6 +55,34 @@ def measure_core_frequency(filename=None):
     return frequency
 
 
+def measure_ambient_temperature(sensor_type="2302", pin="23"):
+    """Uses Adafruit temperature sensor to measure ambient temperature
+    """
+    try:
+        import Adafruit_DHT  # Late import so that library is only needed if requested
+    except ImportError as e:
+        print("Install adafruit_dht python module: pip --user install Adafruit_DHT")
+        raise e
+
+    sensor_map = {
+        "11": Adafruit_DHT.DHT11,
+        "22": Adafruit_DHT.DHT22,
+        "2302": Adafruit_DHT.AM2302,
+    }
+    try:
+        sensor = sensor_map[sensor_type]
+    except KeyError as e:
+        print("Invalid ambient temperature sensor")
+        raise e
+    humidity, temperature = Adafruit_DHT.read_retry(sensor, pin)
+    # Note that sometimes you won't get a reading and the results will be null
+    # (because Linux can't guarantee the timing of calls to read the sensor).
+    # The read_retry call will attempt to read the sensor 15 times with a 2 second delay.
+    # Care should be taken when reading if on a time sensitive path
+    # Temperature is in °C but can also be None
+    return temperature
+
+
 def test(stress_duration, idle_duration, cores):
     """Run stress test for specified duration with specified idle times
        at the start and end of the test.
