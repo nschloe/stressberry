@@ -1,5 +1,5 @@
 # This file was created by stressberry v0.2.2 on 2019-11-15 14:43:33.859569
-name: CooliPi (passive)
+name: CooliPi (fan off)
 cpu frequency:
 - 616.781248
 - 616.833984
