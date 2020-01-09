@@ -36,8 +36,11 @@ def measure_temp(filename=None):
             temp = float(f.read()) / 1000
     else:
         # Using vcgencmd is specific to the raspberry pi
-        out = subprocess.check_output(["vcgencmd", "measure_temp"]).decode("utf-8")
-        temp = float(out.replace("temp=", "").replace("'C", ""))
+        sys_tempfile=open("/sys/class/thermal/thermal_zone0/temp", "r")
+        sys_temp =sys_tempfile.read()
+        sys_tempfile.close()
+        temp_int = int(sys_temp)
+        temp = float(temp_int/1000)
     return temp
 
 
@@ -50,8 +53,11 @@ def measure_core_frequency(filename=None):
     else:
         # Only vcgencmd measure_clock arm is accurate on Raspberry Pi.
         # Per: https://www.raspberrypi.org/forums/viewtopic.php?f=63&t=219358&start=25
-        out = subprocess.check_output(["vcgencmd", "measure_clock arm"]).decode("utf-8")
-        frequency = float(out.split("=")[1]) / 1000000
+        sys_freqfile=open("/sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq", "r")
+        sys_freq =sys_freqfile.read()
+        sys_freqfile.close()
+        freq_int = int(sys_freq)
+        frequency = freq_int / 1000000
     return frequency
 
 
