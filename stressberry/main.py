@@ -57,7 +57,7 @@ def measure_core_frequency(filename=None):
         sys_freq =sys_freqfile.read()
         sys_freqfile.close()
         freq_int = int(sys_freq)
-        frequency = freq_int / 1000000
+        frequency = freq_int / 1000
     return frequency
 
 
