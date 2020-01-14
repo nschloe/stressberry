@@ -147,7 +147,7 @@ def plot(argv=None):
     order = [i[0] for i in sorted(enumerate(terminal_temps), key=lambda x: x[1])]
     # actually plot it
     fig = plt.figure()
-    ax1 = fig.add_subplot()
+    ax1 = fig.add_subplot(1, 1, 1)
     for k in order[::-1]:
         ax1.plot(
             data[k]["time"],
