@@ -52,7 +52,7 @@ No fans, heat sinks, or case. | Your average acrylic case from eBay. | [FastTech
 To run stressberry on your computer, simply install it with
 ```
 [sudo] apt install stress
-pip3 install stressberry --user
+pip install stressberry
 ```
 and run it with
 ```

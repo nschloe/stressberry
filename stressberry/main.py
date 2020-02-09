@@ -4,9 +4,7 @@ from os import cpu_count
 
 
 def stress_cpu(num_cpus, time):
-    subprocess.check_call(
-        ["stress", "--cpu", str(num_cpus), "--timeout", "{}s".format(time)]
-    )
+    subprocess.check_call(["stress", "--cpu", str(num_cpus), "--timeout", f"{time}s"])
     return
 
 
@@ -95,11 +93,11 @@ def test(stress_duration, idle_duration, cores):
             cores, stress_duration
         )
     )
-    print("Idling for {} seconds...".format(idle_duration))
+    print(f"Idling for {idle_duration} seconds...")
     tme.sleep(idle_duration)
 
     stress_cpu(num_cpus=cores, time=stress_duration)
 
-    print("Idling for {} seconds...".format(idle_duration))
+    print(f"Idling for {idle_duration} seconds...")
     tme.sleep(idle_duration)
     return

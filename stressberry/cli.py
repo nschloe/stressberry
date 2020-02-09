@@ -11,9 +11,9 @@ import yaml
 from .__about__ import __copyright__, __version__
 from .main import (
     cooldown,
-    measure_temp,
-    measure_core_frequency,
     measure_ambient_temperature,
+    measure_core_frequency,
+    measure_temp,
     test,
 )
 
