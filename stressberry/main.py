@@ -4,9 +4,7 @@ from os import cpu_count
 
 
 def stress_cpu(num_cpus, time):
-    subprocess.check_call(
-        ["stress", "--cpu", str(num_cpus), "--timeout", f"{time}s"]
-    )
+    subprocess.check_call(["stress", "--cpu", str(num_cpus), "--timeout", f"{time}s"])
     return
 
 
