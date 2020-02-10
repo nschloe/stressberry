@@ -5,7 +5,6 @@ import threading
 import time
 
 import matplotlib.pyplot as plt
-import numpy
 import yaml
 
 from .__about__ import __copyright__, __version__
@@ -192,12 +191,9 @@ def plot(argv=None):
     fig = plt.figure()
     ax1 = fig.add_subplot(1, 1, 1)
     for k in order[::-1]:
+        temperature_data = data[k]["temperature"]
         if args.delta_t:
-            temperature_data = numpy.subtract(
-                data[k]["temperature"], data[k]["ambient"]
-            )
-        else:
-            temperature_data = data[k]["temperature"]
+            temperature_data = [t - data[k]["ambient"] for t in data[k]["temperature"]]
         ax1.plot(
             data[k]["time"], temperature_data, label=data[k]["name"], lw=args.line_width
         )
