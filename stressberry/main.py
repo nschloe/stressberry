@@ -73,11 +73,11 @@ def measure_ambient_temperature(sensor_type="2302", pin="23"):
         print("Invalid ambient temperature sensor")
         raise e
     humidity, temperature = Adafruit_DHT.read_retry(sensor, pin)
-    # Note that sometimes you won't get a reading and the results will be null
-    # (because Linux can't guarantee the timing of calls to read the sensor).
-    # The read_retry call will attempt to read the sensor 15 times with a 2 second delay.
-    # Care should be taken when reading if on a time sensitive path
-    # Temperature is in °C but can also be None
+    # Note that sometimes you won't get a reading and the results will be null (because
+    # Linux can't guarantee the timing of calls to read the sensor).  The read_retry
+    # call will attempt to read the sensor 15 times with a 2 second delay.  Care should
+    # be taken when reading if on a time sensitive path Temperature is in °C but can
+    # also be None
     return temperature
 
 

@@ -34,4 +34,4 @@ black:
 
 lint:
 	black --check .
-	flake8 setup.py stressberry/ test/*.py
+	flake8 .
