@@ -9,9 +9,10 @@
 [![awesome](https://img.shields.io/badge/awesome-yes-brightgreen.svg?style=flat-square)](https://github.com/nschloe/stressberry)
 [![PyPi Version](https://img.shields.io/pypi/v/stressberry.svg?style=flat-square)](https://pypi.org/project/stressberry)
 [![GitHub stars](https://img.shields.io/github/stars/nschloe/stressberry.svg?style=flat-square&logo=github&label=Stars&logoColor=white)](https://github.com/nschloe/stressberry)
+[![PyPi downloads](https://img.shields.io/pypi/dm/stressberry.svg?style=flat-square)](https://pypistats.org/packages/stressberry)
 
 There are a million ways to cool down your Raspberry Pi: Small heat sinks, specific
-cases, and some [extreme DIY solutions](https://youtu.be/WfQMLInuwws).  stressberry is a
+cases, and some [extreme DIY solutions](https://youtu.be/WfQMLInuwws). stressberry is a
 package for testing the core temperature under different loads, and it produces nice
 plots which can easily be compared.
 
@@ -19,9 +20,12 @@ plots which can easily be compared.
 <img src="https://nschloe.github.io/stressberry/4b.svg" width="70%">
 
 <img src="https://nschloe.github.io/stressberry/rpi4-fans.jpg" width="70%"> |
-<img src="https://nschloe.github.io/stressberry/kksb.jpg" width="70%">
-:--------------------------------------:|:----------------------:|
-@flyingferret, custom case with fans    |  @JohBod, [KKSB case](https://kksb-cases.com/products/kksb-raspberry-pi-4-case-aluminium)    |
+<img src="https://nschloe.github.io/stressberry/kksb.jpg" width="70%"> |
+<img src="https://nschloe.github.io/stressberry/argon-one.jpg" width="70%">
+:--------------------------------------:|:----------------------:|:------:|
+custom case with fans  (@flyingferret, [#21](https://github.com/nschloe/stressberry/issues/21))  | [KKSB case](https://kksb-cases.com/products/kksb-raspberry-pi-4-case-aluminium) (@JohBod, [#31](https://github.com/nschloe/stressberry/issues/31)) | [Argon One case](https://www.argon40.com/argon1/argon-one-pi4.html) (@jholloway, [#37](https://github.com/nschloe/stressberry/issues/37))
+<img src="https://nschloe.github.io/stressberry/hex-wrench.png" width="70%"> | <img src="https://nschloe.github.io/stressberry/coolipi.jpg" width="70%"> | <img src="https://nschloe.github.io/stressberry/ice-tower.jpg" width="70%">
+[hex wrench case](https://www.amazon.ca/Aluminum-Model-Raspberry-Wrench-Enclosure/dp/B07W6FT1DD?th=1) (@patrickpoirier51, [#45](https://github.com/nschloe/stressberry/issues/45)) | [CooliPi](https://www.coolipi.com/) (@CooliPi, [#47](https://github.com/nschloe/stressberry/issues/47), [#48](https://github.com/nschloe/stressberry/issues/48)) | [low-profile ice tower case](https://www.aliexpress.com/i/4000288119233.html) (@leonhess, [#54](https://github.com/nschloe/stressberry/issues/54))
 
 
 ### Raspberry Pi 3B+
@@ -48,7 +52,7 @@ No fans, heat sinks, or case. | Your average acrylic case from eBay. | [FastTech
 To run stressberry on your computer, simply install it with
 ```
 [sudo] apt install stress
-pip3 install stressberry --user
+pip install stressberry
 ```
 and run it with
 ```
