@@ -23,7 +23,10 @@ def plot(argv=None):
     for k in order[::-1]:
         temperature_data = data[k]["temperature"]
         if args.delta_t:
-            temperature_data = [t - data[k]["ambient"] for t in data[k]["temperature"]]
+            temperature_data = []
+            zip_object = zip(data[k]["temperature"], data[k]["ambient"])
+            for data[k]["temperature"], data[k]["ambient"] in zip_object:
+                temperature_data.append(data[k]["temperature"] - data[k]["ambient"])
         ax1.plot(
             data[k]["time"], temperature_data, label=data[k]["name"], lw=args.line_width
         )
