@@ -19,9 +19,7 @@ plots which can easily be compared.
 ### Raspberry Pi 4B
 <img src="https://nschloe.github.io/stressberry/4b.svg" width="70%">
 
-<img src="https://nschloe.github.io/stressberry/rpi4-fans.jpg" width="70%"> |
-<img src="https://nschloe.github.io/stressberry/kksb.jpg" width="70%"> |
-<img src="https://nschloe.github.io/stressberry/argon-one.jpg" width="70%">
+<img src="https://nschloe.github.io/stressberry/rpi4-fans.jpg" width="70%"> | <img src="https://nschloe.github.io/stressberry/kksb.jpg" width="70%"> | <img src="https://nschloe.github.io/stressberry/argon-one.jpg" width="70%">
 :--------------------------------------:|:----------------------:|:------:|
 custom case with fans  (@flyingferret, [#21](https://github.com/nschloe/stressberry/issues/21))  | [KKSB case](https://kksb-cases.com/products/kksb-raspberry-pi-4-case-aluminium) (@JohBod, [#31](https://github.com/nschloe/stressberry/issues/31)) | [Argon One case](https://www.argon40.com/argon1/argon-one-pi4.html) (@jholloway, [#37](https://github.com/nschloe/stressberry/issues/37))
 <img src="https://nschloe.github.io/stressberry/hex-wrench.png" width="70%"> | <img src="https://nschloe.github.io/stressberry/coolipi.jpg" width="70%"> | <img src="https://nschloe.github.io/stressberry/ice-tower.jpg" width="70%">
@@ -41,9 +39,7 @@ Thanks to @RichardKav for the measurements!
 ### Raspberry Pi 3B
 <img src="https://nschloe.github.io/stressberry/3b.svg" width="70%">
 
-<img src="https://nschloe.github.io/stressberry/naked-photo.jpg" width="90%"> |
-<img src="https://nschloe.github.io/stressberry/acryl-photo.jpg" width="90%"> |
-<img src="https://nschloe.github.io/stressberry/fasttech-photo.jpg" width="90%">
+<img src="https://nschloe.github.io/stressberry/naked-photo.jpg" width="90%"> | <img src="https://nschloe.github.io/stressberry/acryl-photo.jpg" width="90%"> | <img src="https://nschloe.github.io/stressberry/fasttech-photo.jpg" width="90%">
 :-------------------:|:------------------:|:----------:|
 No fans, heat sinks, or case. | Your average acrylic case from eBay. | [FastTech case](https://www.fasttech.com/p/5299000), full-body aluminum alloy with heat pads for CPU and RAM.
 
