@@ -9,10 +9,9 @@ jobs:
     - uses: actions/setup-python@v1
       with:
         python-version: "3.x"
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
     - name: Lint with flake8
       run: |
-        pip install --upgrade pip
         pip install flake8
         flake8 .
     - name: Lint with black
@@ -22,20 +21,22 @@ jobs:
 
   build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.6, 3.7, 3.8]
     steps:
     - uses: actions/setup-python@v1
       with:
         python-version: "3.x"
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
     - name: Install dependencies
       run: sudo apt-get install -y stress
     - name: Install package
       run: |
-        pip install --upgrade pip
-        pip install .[all]
+        pip install .
     - name: Test with pytest
       run: |
         pip install pytest pytest-cov
         cd test/ && MPLBACKEND=Agg pytest --cov stressberry
-    - name: Submit to codecov
-      run: bash <(curl -s https://codecov.io/bash)
+    # - name: Submit to codecov
+    #   run: bash <(curl -s https://codecov.io/bash)
