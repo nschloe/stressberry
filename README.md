@@ -26,7 +26,6 @@ custom case with fans  (@flyingferret, [#21](https://github.com/nschloe/stressbe
 [hex wrench case](https://www.amazon.ca/Aluminum-Model-Raspberry-Wrench-Enclosure/dp/B07W6FT1DD?th=1) (@patrickpoirier51, [#45](https://github.com/nschloe/stressberry/issues/45)) | [CooliPi](https://www.coolipi.com/) (@CooliPi, [#47](https://github.com/nschloe/stressberry/issues/47), [#48](https://github.com/nschloe/stressberry/issues/48)) | [low-profile ice tower case](https://www.aliexpress.com/i/4000288119233.html) (@leonhess, [#54](https://github.com/nschloe/stressberry/issues/54))
 <img src="https://nschloe.github.io/stressberry/flirc4b.jpeg" width="70%"> | |
 [Flirc case](https://flirc.tv/more/raspberry-pi-4-case) (@RichardKav, [#73](https://github.com/nschloe/stressberry/issues/73)) | |
-flirc4b.jpeg
 
 
 ### Raspberry Pi 3B+
