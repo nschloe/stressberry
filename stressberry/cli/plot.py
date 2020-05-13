@@ -6,8 +6,10 @@ from .helpers import _get_version_text
 
 
 def plot(argv=None):
-    import cleanplotlib as cpl
+    import dufte
     import matplotlib.pyplot as plt
+
+    plt.style.use(dufte.style)
 
     parser = _get_parser_plot()
     args = parser.parse_args(argv)
@@ -17,9 +19,6 @@ def plot(argv=None):
     # actually plot it
     fig = plt.figure()
     ax1 = fig.add_subplot(1, 1, 1)
-    a = []
-    b = []
-    c = []
     for d in data:
         temperature_data = d["temperature"]
         if args.delta_t:
@@ -27,18 +26,17 @@ def plot(argv=None):
             zip_object = zip(d["temperature"], d["ambient"])
             for d["temperature"], d["ambient"] in zip_object:
                 temperature_data.append(d["temperature"] - d["ambient"])
-        a.append(d["time"])
-        b.append(temperature_data)
-        c.append(d["name"])
 
-    cpl.multiplot(a, b, c)
+        plt.plot(d["time"], temperature_data, label=d["name"])
+
+    dufte.legend()
 
     if args.delta_t:
         plot_yaxis_label = "Δ temperature [°C over ambient]"
     else:
         plot_yaxis_label = "temperature [°C]"
-    cpl.xlabel("time [s]")
-    cpl.ylabel(plot_yaxis_label)
+    plt.xlabel("time [s]")
+    plt.ylabel(plot_yaxis_label)
 
     if args.temp_lims:
         ax1.set_ylim(*args.temp_lims)
