@@ -17,7 +17,7 @@ package for testing the core temperature under different loads, and it produces 
 plots which can easily be compared.
 
 ### Raspberry Pi 4B
-<img src="https://nschloe.github.io/stressberry/4b-active.svg" width="70%"> | <img src="https://nschloe.github.io/stressberry/4b-passive.svg" width="70%">
+<img src="https://nschloe.github.io/stressberry/4b-active.svg" width="100%"> | <img src="https://nschloe.github.io/stressberry/4b-passive.svg" width="100%">
 :--------------------------------------:|:----------------------:|
 active | passive
 
