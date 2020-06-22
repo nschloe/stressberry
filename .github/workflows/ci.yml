@@ -1,4 +1,4 @@
-name: test
+name: ci
 
 on: [pull_request]
 
@@ -27,16 +27,16 @@ jobs:
     steps:
     - uses: actions/setup-python@v1
       with:
-        python-version: "3.x"
+        python-version: ${{ matrix.python-version }}
     - uses: actions/checkout@v2
     - name: Install dependencies
       run: sudo apt-get install -y stress
     - name: Install package
-      run: |
-        pip install .
+      run: pip install .
     - name: Test with pytest
       run: |
         pip install pytest pytest-cov
         cd test/ && MPLBACKEND=Agg pytest --cov stressberry
-    # - name: Submit to codecov
-    #   run: bash <(curl -s https://codecov.io/bash)
+    - name: Submit to codecov
+      if: ${{ matrix.python-version == '3.8' }}
+      run: bash <(curl -s https://codecov.io/bash)
