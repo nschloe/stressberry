@@ -114,8 +114,10 @@ def run(argv=None):
                 # If never had a good result, probably configuration error
                 # Else use last known value if available or worst case set to zero
                 if not ambient:
-                    message = "Could not read ambient temperature sensor {} on pin {}".format(
-                        args.ambient[0], args.ambient[1]
+                    message = (
+                        "Could not read ambient temperature sensor {} on pin {}".format(
+                            args.ambient[0], args.ambient[1]
+                        )
                     )
                 else:
                     message = "WARN - Could not read ambient temperature, using last good value"
