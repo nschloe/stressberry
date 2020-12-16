@@ -30,7 +30,7 @@ def measure_temp(filename=None):
     """Returns the core temperature in Celsius.
     """
     if filename is not None:
-        with open(filename, "r") as f:
+        with open(filename) as f:
             temp = float(f.read()) / 1000
     else:
         # Using vcgencmd is specific to the raspberry pi
@@ -43,7 +43,7 @@ def measure_core_frequency(filename=None):
     """Returns the CPU frequency in MHz
     """
     if filename is not None:
-        with open(filename, "r") as f:
+        with open(filename) as f:
             frequency = float(f.read()) / 1000
     else:
         # Only vcgencmd measure_clock arm is accurate on Raspberry Pi.
