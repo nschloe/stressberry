@@ -15,9 +15,8 @@ def cooldown(interval=60, filename=None):
         tme.sleep(interval)
         tmp = measure_temp(filename=filename)
         print(
-            "Current temperature: {:4.1f}°C - Previous temperature: {:4.1f}°C".format(
-                tmp, prev_tmp
-            )
+            f"Current temperature: {tmp:4.1f}°C - "
+            f"Previous temperature: {prev_tmp:4.1f}°C"
         )
         if abs(tmp - prev_tmp) < 0.2:
             break
@@ -68,7 +67,7 @@ def measure_ambient_temperature(sensor_type="2302", pin="23"):
     except KeyError as e:
         print("Invalid ambient temperature sensor")
         raise e
-    humidity, temperature = Adafruit_DHT.read_retry(sensor, pin)
+    _, temperature = Adafruit_DHT.read_retry(sensor, pin)
     # Note that sometimes you won't get a reading and the results will be null (because
     # Linux can't guarantee the timing of calls to read the sensor).  The read_retry
     # call will attempt to read the sensor 15 times with a 2 second delay.  Care should
@@ -84,11 +83,7 @@ def test(stress_duration, idle_duration, cores):
     if cores is None:
         cores = cpu_count()
 
-    print(
-        "Preparing to stress [{}] CPU Cores for [{}] seconds".format(
-            cores, stress_duration
-        )
-    )
+    print(f"Preparing to stress [{cores}] CPU Cores for [{stress_duration}] seconds")
     print(f"Idling for {idle_duration} seconds...")
     tme.sleep(idle_duration)
 
@@ -96,4 +91,3 @@ def test(stress_duration, idle_duration, cores):
 
     print(f"Idling for {idle_duration} seconds...")
     tme.sleep(idle_duration)
-    return

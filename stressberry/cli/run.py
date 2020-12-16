@@ -161,4 +161,3 @@ def run(argv=None):
         },
         args.outfile,
     )
-    return
