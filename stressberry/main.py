@@ -9,16 +9,14 @@ def stress_cpu(num_cpus, time):
 
 
 def cooldown(interval=60, filename=None):
-    """Lets the CPU cool down until the temperature does not change anymore.
-    """
+    """Lets the CPU cool down until the temperature does not change anymore."""
     prev_tmp = measure_temp(filename=filename)
     while True:
         tme.sleep(interval)
         tmp = measure_temp(filename=filename)
         print(
-            "Current temperature: {:4.1f}°C - Previous temperature: {:4.1f}°C".format(
-                tmp, prev_tmp
-            )
+            f"Current temperature: {tmp:4.1f}°C - "
+            f"Previous temperature: {prev_tmp:4.1f}°C"
         )
         if abs(tmp - prev_tmp) < 0.2:
             break
@@ -27,10 +25,9 @@ def cooldown(interval=60, filename=None):
 
 
 def measure_temp(filename=None):
-    """Returns the core temperature in Celsius.
-    """
+    """Returns the core temperature in Celsius."""
     if filename is not None:
-        with open(filename, "r") as f:
+        with open(filename) as f:
             temp = float(f.read()) / 1000
     else:
         # Using vcgencmd is specific to the raspberry pi
@@ -40,10 +37,9 @@ def measure_temp(filename=None):
 
 
 def measure_core_frequency(filename=None):
-    """Returns the CPU frequency in MHz
-    """
+    """Returns the CPU frequency in MHz"""
     if filename is not None:
-        with open(filename, "r") as f:
+        with open(filename) as f:
             frequency = float(f.read()) / 1000
     else:
         # Only vcgencmd measure_clock arm is accurate on Raspberry Pi.
@@ -54,8 +50,7 @@ def measure_core_frequency(filename=None):
 
 
 def measure_ambient_temperature(sensor_type="2302", pin="23"):
-    """Uses Adafruit temperature sensor to measure ambient temperature
-    """
+    """Uses Adafruit temperature sensor to measure ambient temperature"""
     try:
         import Adafruit_DHT  # Late import so that library is only needed if requested
     except ImportError as e:
@@ -72,7 +67,7 @@ def measure_ambient_temperature(sensor_type="2302", pin="23"):
     except KeyError as e:
         print("Invalid ambient temperature sensor")
         raise e
-    humidity, temperature = Adafruit_DHT.read_retry(sensor, pin)
+    _, temperature = Adafruit_DHT.read_retry(sensor, pin)
     # Note that sometimes you won't get a reading and the results will be null (because
     # Linux can't guarantee the timing of calls to read the sensor).  The read_retry
     # call will attempt to read the sensor 15 times with a 2 second delay.  Care should
@@ -83,16 +78,12 @@ def measure_ambient_temperature(sensor_type="2302", pin="23"):
 
 def test(stress_duration, idle_duration, cores):
     """Run stress test for specified duration with specified idle times
-       at the start and end of the test.
+    at the start and end of the test.
     """
     if cores is None:
         cores = cpu_count()
 
-    print(
-        "Preparing to stress [{}] CPU Cores for [{}] seconds".format(
-            cores, stress_duration
-        )
-    )
+    print(f"Preparing to stress [{cores}] CPU Cores for [{stress_duration}] seconds")
     print(f"Idling for {idle_duration} seconds...")
     tme.sleep(idle_duration)
 
@@ -100,4 +91,3 @@ def test(stress_duration, idle_duration, cores):
 
     print(f"Idling for {idle_duration} seconds...")
     tme.sleep(idle_duration)
-    return

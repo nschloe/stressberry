@@ -16,7 +16,7 @@ upload:
 	rm -f dist/*
 	# python3 setup.py sdist bdist_wheel
 	# https://stackoverflow.com/a/58756491/353337
-	python3 -m pep517.build --source --binary .
+	python3 -m build --sdist --wheel .
 	twine upload dist/*
 
 publish: tag upload
@@ -26,11 +26,9 @@ clean:
 	@rm -rf *.egg-info/ build/ dist/
 
 format:
-	isort -rc .
+	isort .
 	black .
-
-black:
-	black .
+	blacken-docs README.md
 
 lint:
 	black --check .
