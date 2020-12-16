@@ -114,29 +114,29 @@ def run(argv=None):
                 # If never had a good result, probably configuration error
                 # Else use last known value if available or worst case set to zero
                 if not ambient:
-                    message = (
-                        "Could not read ambient temperature sensor {} on pin {}".format(
-                            args.ambient[0], args.ambient[1]
-                        )
+                    print(
+                        f"Could not read ambient temperature sensor {args.ambient[0]} "
+                        f"on pin {args.ambient[1]}"
                     )
                 else:
-                    message = "WARN - Could not read ambient temperature, using last good value"
-                print(message)
+                    print(
+                        "WARN - Could not read ambient temperature, "
+                        "using last good value"
+                    )
                 ambient_temperature = next(
                     (temp for temp in reversed(ambient) if temp is not None), 0
                 )
             ambient.append(ambient_temperature)
             delta_t = temps[-1] - ambient[-1]
             print(
-                "Temperature (current | ambient | ΔT): {:4.1f}°C | {:4.1f}°C | {:4.1f}°C - Frequency: {:4.0f}MHz".format(
-                    temps[-1], ambient[-1], delta_t, freqs[-1]
-                )
+                "Temperature (current | ambient | ΔT): "
+                f"{temps[-1]:4.1f}°C | {ambient[-1]:4.1f}°C | {delta_t:4.1f}°C "
+                f"- Frequency: {freqs[-1]:4.0f}MHz"
             )
         else:
             print(
-                "Current temperature: {:4.1f}°C - Frequency: {:4.0f}MHz".format(
-                    temps[-1], freqs[-1]
-                )
+                f"Current temperature: {temps[-1]:4.1f}°C "
+                f"- Frequency: {freqs[-1]:4.0f}MHz"
             )
         # Choose the sample interval such that we have a respectable number of
         # data points
@@ -147,9 +147,8 @@ def run(argv=None):
     times = [tm - time0 for tm in times]
 
     args.outfile.write(
-        "# This file was created by stressberry v{} on {}\n".format(
-            __version__, datetime.datetime.now()
-        )
+        f"# This file was created by stressberry v{__version__} "
+        f"on {datetime.datetime.now()}\n"
     )
     yaml.dump(
         {
