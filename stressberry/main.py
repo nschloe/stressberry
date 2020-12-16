@@ -9,8 +9,7 @@ def stress_cpu(num_cpus, time):
 
 
 def cooldown(interval=60, filename=None):
-    """Lets the CPU cool down until the temperature does not change anymore.
-    """
+    """Lets the CPU cool down until the temperature does not change anymore."""
     prev_tmp = measure_temp(filename=filename)
     while True:
         tme.sleep(interval)
@@ -27,8 +26,7 @@ def cooldown(interval=60, filename=None):
 
 
 def measure_temp(filename=None):
-    """Returns the core temperature in Celsius.
-    """
+    """Returns the core temperature in Celsius."""
     if filename is not None:
         with open(filename) as f:
             temp = float(f.read()) / 1000
@@ -40,8 +38,7 @@ def measure_temp(filename=None):
 
 
 def measure_core_frequency(filename=None):
-    """Returns the CPU frequency in MHz
-    """
+    """Returns the CPU frequency in MHz"""
     if filename is not None:
         with open(filename) as f:
             frequency = float(f.read()) / 1000
@@ -54,8 +51,7 @@ def measure_core_frequency(filename=None):
 
 
 def measure_ambient_temperature(sensor_type="2302", pin="23"):
-    """Uses Adafruit temperature sensor to measure ambient temperature
-    """
+    """Uses Adafruit temperature sensor to measure ambient temperature"""
     try:
         import Adafruit_DHT  # Late import so that library is only needed if requested
     except ImportError as e:
@@ -83,7 +79,7 @@ def measure_ambient_temperature(sensor_type="2302", pin="23"):
 
 def test(stress_duration, idle_duration, cores):
     """Run stress test for specified duration with specified idle times
-       at the start and end of the test.
+    at the start and end of the test.
     """
     if cores is None:
         cores = cpu_count()
