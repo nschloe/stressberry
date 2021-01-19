@@ -3,13 +3,14 @@
   <p align="center">Stress tests and temperature plots for the Raspberry Pi</p>
 </p>
 
-[![CircleCI](https://img.shields.io/circleci/project/github/nschloe/stressberry/master.svg?style=flat-square)](https://circleci.com/gh/nschloe/stressberry/tree/master)
-[![codecov](https://img.shields.io/codecov/c/github/nschloe/stressberry.svg?style=flat-square)](https://codecov.io/gh/nschloe/stressberry)
-[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg?style=flat-square)](https://github.com/psf/black)
-[![awesome](https://img.shields.io/badge/awesome-yes-brightgreen.svg?style=flat-square)](https://github.com/nschloe/stressberry)
 [![PyPi Version](https://img.shields.io/pypi/v/stressberry.svg?style=flat-square)](https://pypi.org/project/stressberry)
+[![PyPI pyversions](https://img.shields.io/pypi/pyversions/stressberry.svg?style=flat-square)](https://pypi.org/pypi/stressberry/)
 [![GitHub stars](https://img.shields.io/github/stars/nschloe/stressberry.svg?style=flat-square&logo=github&label=Stars&logoColor=white)](https://github.com/nschloe/stressberry)
 [![PyPi downloads](https://img.shields.io/pypi/dm/stressberry.svg?style=flat-square)](https://pypistats.org/packages/stressberry)
+
+[![gh-actions](https://img.shields.io/github/workflow/status/nschloe/stressberry/ci?style=flat-square)](https://github.com/nschloe/stressberry/actions?query=workflow%3Aci)
+[![codecov](https://img.shields.io/codecov/c/github/nschloe/stressberry.svg?style=flat-square)](https://codecov.io/gh/nschloe/stressberry)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg?style=flat-square)](https://github.com/psf/black)
 
 There are a million ways to cool down your Raspberry Pi: Small heat sinks, specific
 cases, and some [extreme DIY solutions](https://youtu.be/WfQMLInuwws). stressberry is a
