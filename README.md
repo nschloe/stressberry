@@ -51,9 +51,9 @@ No fans, heat sinks, or case. | Your average acrylic case from eBay. | [FastTech
 ### How to
 
 To run stressberry on your computer, simply install it with
-```
+```bash
 [sudo] apt install stress
-pip install stressberry
+python3 -m pip install stressberry
 ```
 and run it with
 ```
@@ -62,6 +62,13 @@ stressberry-plot out.dat -o out.png
 ```
 (Use `MPLBACKEND=Agg stressberry-plot out.dat -o out.png` if you're running the script
 on the Raspberry Pi itself.)
+
+If it your computer can't find the stressberry tools after installation,
+you might have to add the directory `$HOME/.local/bin` to your path:
+```
+export PATH=$PATH:/home/pi/.local/bin
+```
+(You can also put this line in your `.bashrc`.)
 
 The run lets the CPU idle for a bit, then stresses it with maximum load for 5 minutes,
 and lets it cool down afterwards. The entire process takes 10 minutes.  The resulting
