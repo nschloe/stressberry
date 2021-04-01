@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https://github.com/nschloe/stressberry"><img alt="stressberry" src="https://nschloe.github.io/stressberry/stressberry.png" width="60%"></a>
+  <a href="https://github.com/nschloe/stressberry"><img alt="stressberry" src="https://nschloe.github.io/stressberry/stressberry-logo.svg" width="60%"></a>
   <p align="center">Stress tests and temperature plots for the Raspberry Pi</p>
 </p>
 
