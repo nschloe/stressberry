@@ -6,13 +6,21 @@ from .helpers import _get_version_text
 
 
 def plot(argv=None):
-    import dufte
     import matplotlib.pyplot as plt
-
-    plt.style.use(dufte.style)
 
     parser = _get_parser_plot()
     args = parser.parse_args(argv)
+
+    if args.legacy_style:
+        import matplotlib.style as style
+
+        if args.color_blind_friendly:
+            plt.style.use('tableau-colorblind10')
+            # plt.style.use("seaborn-colorblind")
+    else:
+        import dufte
+
+        plt.style.use(dufte.style)
 
     data = [yaml.load(f, Loader=yaml.SafeLoader) for f in args.infiles]
 
@@ -27,9 +35,17 @@ def plot(argv=None):
             for d["temperature"], d["ambient"] in zip_object:
                 temperature_data.append(d["temperature"] - d["ambient"])
 
-        plt.plot(d["time"], temperature_data, label=d["name"])
+        plt.plot(d["time"], temperature_data, label=d["name"], lw=args.line_width)
 
-    dufte.legend()
+    if args.legacy_style:
+        ax1.grid()
+        ax1.set_xlim([data[-1]["time"][0], data[-1]["time"][-1]])
+
+    if not args.hide_legend:
+        if args.legacy_style:
+            ax1.legend(loc="upper left", bbox_to_anchor=(1.03, 1.0), borderaxespad=0)
+        else:
+            dufte.legend()
 
     if args.delta_t:
         plot_yaxis_label = "Δ temperature [°C over ambient]"
@@ -55,6 +71,7 @@ def plot(argv=None):
                     label=d["name"],
                     color="C1",
                     alpha=0.9,
+                    lw=args.line_width,
                 )
             ax1.set_zorder(ax2.get_zorder() + 1)  # put ax1 plot in front of ax2
             ax1.patch.set_visible(False)  # hide the 'canvas'
@@ -121,6 +138,7 @@ def _get_parser_plot():
         default=None,
         help="limits for the frequency scale (default: data limits)",
     )
+    parser.add_argument("--hide-legend", help="do not draw legend", action="store_true")
     parser.add_argument(
         "--not-transparent",
         dest="transparent",
@@ -129,9 +147,24 @@ def _get_parser_plot():
         default=True,
     )
     parser.add_argument(
+        "-lw", "--line-width", type=float, default=None, help="line width"
+    )
+    parser.add_argument(
         "--delta-t",
         action="store_true",
         default=False,
-        help="Use Delta-T (core - ambient) temperature instead of CPU core temperature",
+        help="use Delta-T (core - ambient) temperature instead of CPU core temperature",
+    )
+    parser.add_argument(
+        "--legacy-style",
+        action="store_true",
+        default=False,
+        help="use legacy style graphing instead of dufte",
+    )
+    parser.add_argument(
+        "--color-blind-friendly",
+        action="store_true",
+        default=False,
+        help="use a color pallet which is more friendly to those with color vision impairment",
     )
     return parser
