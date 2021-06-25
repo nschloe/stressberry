@@ -55,6 +55,10 @@ To run stressberry on your computer, simply install it with
 [sudo] apt install stress
 python3 -m pip install stressberry
 ```
+Users of [Arch Linux ARM](https://archlinuxarm.org/) can install from the official repos
+```
+[sudo] pacman -S stressberry
+```
 and run it with
 ```
 stressberry-run out.dat
