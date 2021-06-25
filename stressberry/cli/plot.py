@@ -11,12 +11,8 @@ def plot(argv=None):
     parser = _get_parser_plot()
     args = parser.parse_args(argv)
 
-    if args.legacy_style:
-        import matplotlib.style as style
-
         if args.color_blind_friendly:
-            plt.style.use('tableau-colorblind10')
-            # plt.style.use("seaborn-colorblind")
+            plt.style.use("tableau-colorblind10")
     else:
         import dufte
 
