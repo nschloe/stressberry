@@ -1,6 +1,10 @@
 import tempfile
-
+import pytest
 import stressberry
+
+
+def pytest_namespace():
+    return {"outfile": None}
 
 
 def test_run():
@@ -18,10 +22,11 @@ def test_run():
     #     [outfile1, "-d", "12", "-i", "2", "--cooldown", "1"]
     # )
 
-    outfile = tempfile.NamedTemporaryFile().name
+    pytest.outfile = tempfile.NamedTemporaryFile().name
+
     stressberry.cli.run(
         [
-            outfile,
+            pytest.outfile,
             "-t",
             temperature_file,
             "-f",
@@ -34,14 +39,20 @@ def test_run():
             "1",
         ]
     )
+    return
 
+
+def test_plot():
     stressberry.cli.plot(
-        [outfile, "-f", "--temp-lims", "20", "90", "--freq-lims", "500", "2000"]
+        [pytest.outfile, "-f", "--temp-lims", "20", "90", "--freq-lims", "500", "2000"]
     )
+
+
+def test_plot_output_to_file():
     plotoutfile = tempfile.NamedTemporaryFile().name
     stressberry.cli.plot(
         [
-            outfile,
+            pytest.outfile,
             "-f",
             "--temp-lims",
             "20",
@@ -51,6 +62,83 @@ def test_run():
             "2000",
             "-o",
             plotoutfile,
+        ]
+    )
+    return
+
+
+def test_plot_line_widths():
+    stressberry.cli.plot(
+        [
+            pytest.outfile,
+            "-f",
+            "--temp-lims",
+            "20",
+            "90",
+            "--freq-lims",
+            "500",
+            "2000",
+            "-lw",
+            "0.5",
+        ]
+    )
+    return
+
+
+def test_plot_hide_legend():
+    stressberry.cli.plot(
+        [
+            pytest.outfile,
+            "-f",
+            "--temp-lims",
+            "20",
+            "90",
+            "--freq-lims",
+            "500",
+            "2000",
+            "--hide-legend",
+        ]
+    )
+    return
+
+
+def test_plot_not_transparent():
+    stressberry.cli.plot(
+        [pytest.outfile, "-f", "--temp-lims", "20", "90", "--freq-lims", "500", "2000"]
+    )
+    return
+
+
+def test_plot_legacy_style():
+    stressberry.cli.plot(
+        [
+            pytest.outfile,
+            "-f",
+            "--temp-lims",
+            "20",
+            "90",
+            "--freq-lims",
+            "500",
+            "2000",
+            "--legacy-style",
+        ]
+    )
+    return
+
+
+def test_plot_legacy_style_color_blind_friendly():
+    stressberry.cli.plot(
+        [
+            pytest.outfile,
+            "-f",
+            "--temp-lims",
+            "20",
+            "90",
+            "--freq-lims",
+            "500",
+            "2000",
+            "--legacy-style",
+            "--color-blind-friendly",
         ]
     )
     return
