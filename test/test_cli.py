@@ -104,7 +104,7 @@ def test_plot_hide_legend():
 
 def test_plot_not_transparent():
     stressberry.cli.plot(
-        [pytest.outfile, "-f", "--temp-lims", "20", "90", "--freq-lims", "500", "2000",]
+        [pytest.outfile, "-f", "--temp-lims", "20", "90", "--freq-lims", "500", "2000"]
     )
     return
 
