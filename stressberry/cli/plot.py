@@ -6,10 +6,10 @@ from .helpers import _get_version_text
 
 
 def plot(argv=None):
-    import dufte
+    import matplotx
     import matplotlib.pyplot as plt
 
-    plt.style.use(dufte.style)
+    plt.style.use(matplotx.styles.dufte)
 
     parser = _get_parser_plot()
     args = parser.parse_args(argv)
@@ -29,7 +29,7 @@ def plot(argv=None):
 
         plt.plot(d["time"], temperature_data, label=d["name"])
 
-    dufte.legend()
+    matplotx.line_labels()
 
     if args.delta_t:
         plot_yaxis_label = "Δ temperature [°C over ambient]"
