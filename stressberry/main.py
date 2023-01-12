@@ -3,8 +3,16 @@ import time as tme
 from os import cpu_count
 
 
+def find_stress_command():
+    rc = subprocess.call(["which", "stress-ng"])
+    if rc == 0:
+        return 'stress-ng'
+    return 'stress'
+
+
 def stress_cpu(num_cpus, time):
-    subprocess.check_call(["stress", "--cpu", str(num_cpus), "--timeout", f"{time}s"])
+    stress_command = find_stress_command()
+    subprocess.check_call([stress_command, "--cpu", str(num_cpus), "--timeout", f"{time}s"])
     return
 
 
