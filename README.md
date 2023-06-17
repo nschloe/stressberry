@@ -8,7 +8,7 @@
 [![GitHub stars](https://img.shields.io/github/stars/nschloe/stressberry.svg?style=flat-square&logo=github&label=Stars&logoColor=white)](https://github.com/nschloe/stressberry)
 [![PyPi downloads](https://img.shields.io/pypi/dm/stressberry.svg?style=flat-square)](https://pypistats.org/packages/stressberry)
 
-[![gh-actions](https://img.shields.io/github/workflow/status/nschloe/stressberry/ci?style=flat-square)](https://github.com/nschloe/stressberry/actions?query=workflow%3Aci)
+[![gh-actions](https://img.shields.io/github/actions/workflow/status/nschloe/stressberry/ci.yml?branch=main)](https://github.com/nschloe/stressberry/actions?query=workflow%3Aci)
 [![codecov](https://img.shields.io/codecov/c/github/nschloe/stressberry.svg?style=flat-square)](https://codecov.io/gh/nschloe/stressberry)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg?style=flat-square)](https://github.com/psf/black)
 
