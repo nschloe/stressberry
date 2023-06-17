@@ -12,10 +12,11 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/setup-python@v2
+    - uses: actions/setup-python@v4
       with:
         python-version: "3.x"
-    - uses: actions/checkout@v2
+        cache: 'pip'
+    - uses: actions/checkout@v3
     - name: Lint with flake8
       run: |
         pip install flake8
@@ -31,10 +32,11 @@ jobs:
       matrix:
         python-version: [3.7, 3.8, 3.9]
     steps:
-    - uses: actions/setup-python@v2
+    - uses: actions/setup-python@v4
       with:
         python-version: ${{ matrix.python-version }}
-    - uses: actions/checkout@v2
+        cache: 'pip'
+    - uses: actions/checkout@v3
     - name: Install system dependencies
       run: sudo apt-get install -y stress
     - name: Test with tox
